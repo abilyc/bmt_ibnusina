@@ -1,10 +1,10 @@
 class User {
-  String? userName;
-  String? userId;
-  String? userRole;
-  String? token;
+  dynamic userName;
+  dynamic userId;
+  dynamic userRole;
+  dynamic token;
 
-  User({this.userName = '', this.userId = '', this.userRole = '', this.token = ''});
+  User({this.userName, this.userId, this.userRole, this.token});
 
   User.fromJson(Map<String, dynamic> json)
       : userName = json['data']['login']['username'],

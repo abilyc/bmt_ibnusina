@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 80),
             ElevatedButton(
               onPressed: () =>
-                  login(nameController.text, passwordController.text),
+                  login(context, nameController.text, passwordController.text),
               child: const Text('Login'),
             )
           ],
@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-login(String? username, String? password) async {
+login(BuildContext context, String? username, String? password) async {
   HasuraConnect hasuraConnect =
       HasuraConnect('https://ibs-finance.hasura.app/v1/graphql');
   try {
@@ -57,5 +57,7 @@ login(String? username, String? password) async {
     Auth.user(data);
   } catch (e) {
     Auth.streamError;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Login Gagal')));
   }
 }

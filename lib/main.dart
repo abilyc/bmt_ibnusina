@@ -1,6 +1,5 @@
 import 'package:bmt_ibnusina/auth/services.dart';
-import 'package:bmt_ibnusina/models/user.dart';
-import 'package:bmt_ibnusina/screens/home.dart';
+import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'screens/login.dart';
@@ -27,36 +26,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Auth(context: context);
+    Auth();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BMT Ibnu Sina',
-        theme: ThemeData( 
+        theme: ThemeData(
           primarySwatch: Colors.orange,
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: SafeArea(
-          child: Scaffold(
-              appBar: AppBar(
-                title: const Text('BMT IBNU SINA'),
-                centerTitle: true,
-              ),
-              body: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                      // borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.0)),
-                      color: Colors.white),
-                  child: StreamBuilder(
-                      stream: Auth.streamUser,
-                      builder: (context, AsyncSnapshot<User> snapshot) {
-                        if (snapshot.hasData) {
-                          return const Home();
-                        }else{
-                          return const LoginScreen();
-                        }
-                      }))),
-        ));
+        home: Builder(builder: (context) {
+          Auth.ctx(context);
+          return const Wrapper(body: LoginScreen());
+        }));
   }
 }

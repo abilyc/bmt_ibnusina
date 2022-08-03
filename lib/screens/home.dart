@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:bmt_ibnusina/auth/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,11 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!Platform.isAndroid) {
+      const Size size = Size(600, 450);
+      appWindow.size = size;
+      appWindow.maxSize = size;
+    }
     return Container(
       child: Text("Welcome ${Auth.userData.userName}"),
     );

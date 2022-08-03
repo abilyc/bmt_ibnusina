@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Wrap(
           alignment: WrapAlignment.center,
           runAlignment: WrapAlignment.center,

@@ -8,16 +8,6 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
-  if (!Platform.isAndroid) {
-    doWhenWindowReady(() {
-      const initialSize = Size(600, 450);
-      appWindow.minSize = initialSize;
-      appWindow.size = initialSize;
-      appWindow.alignment = Alignment.center;
-      appWindow.title = "BMT IBNU SINA";
-      appWindow.show();
-    });
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +17,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Auth();
+    if (!Platform.isAndroid) {
+    doWhenWindowReady(() {
+      const initialSize = Size(280, 450);
+      appWindow.minSize = initialSize;
+      appWindow.maxSize = initialSize;
+      appWindow.size = initialSize;
+      appWindow.alignment = Alignment.center;
+      appWindow.title = "BMT IBNU SINA";
+      appWindow.show();
+    });
+  }
+    // appWindow.size = const Size(600, 320);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BMT Ibnu Sina',

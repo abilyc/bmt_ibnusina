@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Wrap(
           alignment: WrapAlignment.center,
           runAlignment: WrapAlignment.center,
@@ -22,18 +22,51 @@ class LoginScreen extends StatelessWidget {
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                  labelText: 'User Name',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person)),
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
+              decoration: InputDecoration(
+                  // labelText: 'User Name',
+                  hintText: 'User Name',
+                  hintStyle: TextStyle(color: Theme.of(context).primaryColorDark),
+                  fillColor: Theme.of(context).primaryColorLight,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.5)
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    )
+                  ),
+                  prefixIcon: Icon(Icons.person, color: Theme.of(context).primaryColorDark)),
             ),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock)),
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
+              decoration: InputDecoration(
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Theme.of(context).primaryColorDark),
+                  fillColor: Theme.of(context).primaryColorLight,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.5)
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    )
+                  ),
+                  prefixIcon: Icon(Icons.lock, color: Theme.of(context).primaryColorDark)),
             ),
             const SizedBox(height: 80),
             ElevatedButton(

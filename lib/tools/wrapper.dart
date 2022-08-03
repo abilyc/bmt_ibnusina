@@ -26,7 +26,7 @@ class Wrapper extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8.0),
           width: double.infinity,
           height: double.infinity,
-          decoration: const BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
           child:body,
         ),
       )

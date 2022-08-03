@@ -11,9 +11,9 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!Platform.isAndroid) {
-      const Size size = Size(600, 450);
-      appWindow.size = size;
-      appWindow.maxSize = size;
+      // const Size size = Size(600, 450);
+      appWindow.size = const Size(600, 450);
+      appWindow.maxSize = const Size(600, 450);
     }
     return Container(
       child: Text("Welcome ${Auth.userData.userName}"),

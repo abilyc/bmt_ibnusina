@@ -8,3 +8,24 @@ const String loginMutation = r"""
   }
 }
 """;
+
+const String setorMutation = r'''
+  mutation Penyetoran (
+    $reference: String
+    $date: String
+    $description: String
+    $cashIn: ID!
+    $amount: Int!
+  ) {
+    penyetoran(
+      reference: $reference
+      date: $date
+      description: $description
+      cashIn: $cashIn
+      amount: $amount
+    ) {
+      id
+      success
+    }
+  }
+''';

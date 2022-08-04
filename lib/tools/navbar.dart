@@ -1,16 +1,21 @@
+import 'package:bmt_ibnusina/screens/transaksi.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({Key? key}) : super(key: key);
+  const NavBar({Key? key, required this.parentContext}) : super(key: key);
+  final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.orange,
+      backgroundColor: Theme.of(context).primaryColor,
       child: ListView(
-        children: const [
-          Text('Menu 1'),
-          Text('menu 2')
+        children: [
+          IconButton(
+              onPressed: () => Navigator.push(parentContext,
+                  MaterialPageRoute(builder: (context) => const Transaksi())),
+              icon: const Icon(Icons.abc)),
+          const Text('menu 2')
         ],
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:bmt_ibnusina/auth/services.dart';
-import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'screens/login.dart';
@@ -10,9 +9,11 @@ void main() {
   runApp(const MyApp());
   if (!Platform.isAndroid) {
     doWhenWindowReady(() {
-      const initialSize = Size(300, 450);
-      appWindow.minSize = initialSize;
-      appWindow.size = initialSize;
+      const initialsize = Size(300, 450);
+      appWindow.size = initialsize;
+      appWindow.maxSize = initialsize;
+      appWindow.minSize = initialsize;
+      appWindow.size = initialsize;
       appWindow.alignment = Alignment.center;
       appWindow.title = "BMT IBNU SINA";
       appWindow.show();
@@ -39,9 +40,6 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: Builder(builder: (context) {
-          Auth.ctx(context);
-          return const Wrapper(body: LoginScreen());
-        }));
+        home: Builder(builder: (context) => const LoginScreen()));
   }
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bmt_ibnusina/models/user.dart';
 import 'package:bmt_ibnusina/screens/home.dart';
-import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class Auth {
@@ -16,13 +15,12 @@ class Auth {
     _user = User.fromJson(v);
     _streamController.sink.add(_user);
     Navigator.pushReplacement(
-        _this.context,
-        MaterialPageRoute(
-            builder: (context) => const Wrapper(body: Home(), menu: true)));
+        _this.context, MaterialPageRoute(builder: (context) => const Home()));
   }
 
   static get userData => _user;
   static get streamError => _streamController.addError('error');
+  static get parentCtx => _this.context;
   static Stream<User> get streamUser => _streamController.stream;
 
   factory Auth() {

@@ -35,7 +35,16 @@ class Wrapper extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-          child:body,
+          child:Column(
+            children: [
+              Row(
+                children: [
+                  IconButton(onPressed: () => Navigator.pop(context), icon: const BackButtonIcon())
+                ],
+              ),
+              body,
+            ],
+          ),
         ),
       )
     );

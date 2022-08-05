@@ -2,8 +2,8 @@ import 'package:bmt_ibnusina/screens/transaksi.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({Key? key, required this.parentContext}) : super(key: key);
   final BuildContext parentContext;
+  const NavBar({Key? key, required this.parentContext}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

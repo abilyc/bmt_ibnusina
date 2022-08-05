@@ -79,12 +79,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 80),
               ElevatedButton(
-                onPressed: !loading ? () async {
-                  setState(()=>loading = true);
-                  await login(context, nameController.text, passwordController.text);
-                  setState(()=>loading = false);
-                } : null,
-                child: loading ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Login'),
+                onPressed: !loading
+                    ? () async {
+                        setState(() => loading = true);
+                        await login(context, nameController.text,
+                            passwordController.text);
+                        setState(() => loading = false);
+                      }
+                    : null,
+                child: loading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Text('Login'),
               )
             ],
           ),

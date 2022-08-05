@@ -6,7 +6,6 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
   if (!Platform.isAndroid) {
     doWhenWindowReady(() {
       const initialsize = Size(300, 450);
@@ -19,6 +18,7 @@ void main() {
       appWindow.show();
     });
   }
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

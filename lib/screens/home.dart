@@ -8,6 +8,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrapper(body: Text("Welcome ${Auth.userData.userName}"), size: const Size(600,450));
+    return Wrapper(back: false, body: Text("Welcome ${Auth.userData.userName}"));
   }
 }

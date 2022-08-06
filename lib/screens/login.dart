@@ -20,69 +20,78 @@ class _LoginScreenState extends State<LoginScreen> {
     final TextEditingController passwordController = TextEditingController();
     return Wrapper(
       menu: false,
+      back: false,
       body: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            runAlignment: WrapAlignment.center,
-            runSpacing: 20,
+          child: Column(
             children: [
-              TextField(
-                controller: nameController,
-                style: TextStyle(color: Theme.of(context).primaryColorDark),
-                decoration: InputDecoration(
-                    // labelText: 'User Name',
-                    hintText: 'User Name',
-                    hintStyle:
-                        TextStyle(color: Theme.of(context).primaryColorDark),
-                    fillColor: Theme.of(context).primaryColorLight,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.5)),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.transparent,
-                    )),
-                    prefixIcon: Icon(Icons.person,
-                        color: Theme.of(context).primaryColorDark)),
+              const SizedBox(
+                height: 70,
+                width: double.infinity
               ),
-              TextField(
-                controller: passwordController,
-                obscureText: true,
-                style: TextStyle(color: Theme.of(context).primaryColorDark),
-                decoration: InputDecoration(
-                    hintText: 'Password',
-                    hintStyle:
-                        TextStyle(color: Theme.of(context).primaryColorDark),
-                    fillColor: Theme.of(context).primaryColorLight,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.5)),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: nameController,
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                  decoration: InputDecoration(
+                      // labelText: 'User Name',
+                      hintText: 'User Name',
+                      hintStyle:
+                          TextStyle(color: Theme.of(context).primaryColorDark),
+                      fillColor: Theme.of(context).primaryColorLight,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.5)),
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
-                      color: Colors.transparent,
-                    )),
-                    prefixIcon: Icon(Icons.lock,
-                        color: Theme.of(context).primaryColorDark)),
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Colors.transparent,
+                      )),
+                      prefixIcon: Icon(Icons.person,
+                          color: Theme.of(context).primaryColorDark)),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                  decoration: InputDecoration(
+                      hintText: 'Password',
+                      hintStyle:
+                          TextStyle(color: Theme.of(context).primaryColorDark),
+                      fillColor: Theme.of(context).primaryColorLight,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.5)),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Colors.transparent,
+                      )),
+                      prefixIcon: Icon(Icons.lock,
+                          color: Theme.of(context).primaryColorDark)),
+                ),
               ),
               const SizedBox(height: 80),
               ElevatedButton(
                 onPressed: !loading
                     ? () async {
                         setState(() => loading = true);
-                        await login(context, nameController.text,
+                        await login(nameController.text,
                             passwordController.text);
                         setState(() => loading = false);
                       }
@@ -102,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-login(BuildContext context, String? username, String? password) async {
+login(String? username, String? password) async {
   HasuraConnect hasuraConnect =
       HasuraConnect('https://ibs-finance.hasura.app/v1/graphql');
   try {
@@ -111,7 +120,7 @@ login(BuildContext context, String? username, String? password) async {
     Auth.user(data);
   } catch (e) {
     Auth.streamError;
-    ScaffoldMessenger.of(context)
+    ScaffoldMessenger.of(Auth.parentCtx)
         .showSnackBar(const SnackBar(content: Text('Login Gagal')));
   }
 }

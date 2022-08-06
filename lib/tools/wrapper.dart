@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:bmt_ibnusina/tools/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:bmt_ibnusina/auth/services.dart';
@@ -13,23 +10,18 @@ class Wrapper extends StatelessWidget {
       required this.body,
       this.judul = 'BMT IBNU SINA',
       this.menu = true,
-      this.size = const Size(600, 450)})
+      this.back = true})
       : super(
           key: key,
         );
   final Widget body;
+  final bool back;
   final String judul;
-  final Size size;
   final bool menu;
 
   @override
   Widget build(BuildContext context) {
     Auth.ctx(context);
-    if (!Platform.isAndroid) {
-      // const Size size = Size(600, 450);
-      appWindow.size = size;
-      appWindow.maxSize = size;
-    }
     return SafeArea(
         child: Scaffold(
       appBar: CustomAppBar(
@@ -41,17 +33,23 @@ class Wrapper extends StatelessWidget {
       ),
       drawer: NavBar(parentContext: context),
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
         child: Column(
           children: [
-            // Row(
-            //   children: [
-            //     IconButton(onPressed: () => Navigator.pop(context), icon: const BackButtonIcon())
-            //   ],
-            // ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                back
+                    ? IconButton(
+                        iconSize: 16,
+                        onPressed: () => Navigator.pop(context),
+                        icon: const BackButtonIcon())
+                    : const SizedBox(width: 0, height: 0),
+              ],
+            ),
             body,
           ],
         ),

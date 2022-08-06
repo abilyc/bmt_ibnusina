@@ -15,7 +15,11 @@ class NavBar extends StatelessWidget {
               onPressed: () => Navigator.push(parentContext,
                   MaterialPageRoute(builder: (context) => const Transaksi())),
               icon: const Icon(Icons.abc)),
-          const Text('menu 2')
+          const Text('Form Storan'),
+          const Text('Form Penarikan'),
+          const Text('Form Transfer'),
+
+
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:bmt_ibnusina/auth/services.dart';
+import 'package:bmt_ibnusina/screens/transaksi.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'screens/login.dart';
@@ -8,7 +9,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (!Platform.isAndroid) {
     doWhenWindowReady(() {
-      const initialsize = Size(300, 450);
+      const initialsize = Size(600, 450);
       appWindow.size = initialsize;
       appWindow.maxSize = initialsize;
       appWindow.minSize = initialsize;
@@ -40,6 +41,6 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: Builder(builder: (context) => const LoginScreen()));
+        home: Builder(builder: (context) => const Transaksi()));
   }
 }

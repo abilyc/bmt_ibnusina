@@ -54,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide: BorderSide(
                         color: Colors.transparent,
                       )),
-                      prefixIcon: Icon(Icons.person,
-                          color: Theme.of(context).primaryColorDark)),
+                      prefixIcon: Icon(Icons.person, color: Theme.of(context).primaryColorDark)
+                    ),
                 ),
               ),
               const SizedBox(height: 20),

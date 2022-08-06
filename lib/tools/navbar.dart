@@ -1,4 +1,4 @@
-import 'package:bmt_ibnusina/screens/transaksi.dart';
+import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
@@ -13,11 +13,11 @@ class NavBar extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () => Navigator.push(parentContext,
-                  MaterialPageRoute(builder: (context) => const Transaksi())),
+                  MaterialPageRoute(builder: (context) => const Penyetoran())),
               icon: const Icon(Icons.abc)),
-          const Text('Form Storan'),
-          const Text('Form Penarikan'),
-          const Text('Form Transfer'),
+          const Text('Storan'),
+          const Text('Penarikan'),
+          const Text('Transfer'),
 
 
         ],

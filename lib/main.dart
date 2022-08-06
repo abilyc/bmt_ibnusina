@@ -1,5 +1,5 @@
 import 'package:bmt_ibnusina/auth/services.dart';
-import 'package:bmt_ibnusina/screens/transaksi.dart';
+import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'screens/login.dart';
@@ -41,6 +41,6 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: Builder(builder: (context) => const Transaksi()));
+        home: Builder(builder: (context) => const Penyetoran()));
   }
 }

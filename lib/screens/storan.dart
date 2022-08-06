@@ -11,33 +11,39 @@ class Penyetoran extends StatefulWidget {
 }
 
 class _PenyetoranState extends State<Penyetoran> {
-  final bool showDetail = false;
+  bool showDetail = false;
   final dataNasabah = Nasabah(nama: 'Wiwin Sumiwin', ref: '', desc: '');
   final TextEditingController noRek = TextEditingController();
   final TextEditingController refController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController jmlController = TextEditingController();
+  final Map screenData = {'penyetoran': []};
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() => showDetail = true);
+  }
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> data = [
       Row(
-            children: [
-              const SizedBox(
-                width: 60,
-                child: Text('No. Rek'),
-              ),
-              Expanded(
-                child: TextFieldCust(icon: Icons.search, controller: noRek),
-              ),
-            ],
+        children: [
+          const SizedBox(
+            width: 60,
+            child: Text('No. Rek'),
           ),
+          Expanded(
+            child: TextFieldCust(icon: Icons.search, controller: noRek),
+          ),
+        ],
+      ),
     ];
     final List<Widget> detail = [
       const SizedBox(height: 60),
       Text(dataNasabah.nama,
-          style:
-              const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       const SizedBox(height: 30),
       Row(
         children: [
@@ -75,18 +81,15 @@ class _PenyetoranState extends State<Penyetoran> {
     ];
 
     return Wrapper(
-      screen: 'PENYETORAN',
-      body: Wrap(
-        alignment: WrapAlignment.center,
-        runSpacing: 5,
-        children: [
-          ...data,
-          const SizedBox(height: 60),
-          if(showDetail) ...detail,
-          const SizedBox(height: 60),
-          if(showDetail) const ElevatedButton(onPressed: null, child: Text('Konfirmasi'))
-        ]
-      ),
+      screen: 'penyetoran'.toUpperCase(),
+      body: Wrap(alignment: WrapAlignment.center, runSpacing: 5, children: [
+        ...data,
+        const SizedBox(height: 60),
+        if (showDetail) ...detail,
+        const SizedBox(height: 60),
+        if (showDetail)
+          const ElevatedButton(onPressed: null, child: Text('Konfirmasi'))
+      ]),
     );
   }
 }

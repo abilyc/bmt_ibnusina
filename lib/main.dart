@@ -1,4 +1,5 @@
 import 'package:bmt_ibnusina/auth/services.dart';
+import 'package:bmt_ibnusina/screens/home.dart';
 import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -41,6 +42,12 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: Builder(builder: (context) => const Penyetoran()));
+        routes: {
+          'home':(context) => const Home(),
+          'login':(context) => const LoginScreen(),
+          'setor':(context) => const Penyetoran(),
+        },
+        initialRoute: 'setor',
+    );
   }
 }

@@ -14,8 +14,7 @@ class Auth {
   static void user(v) {
     _user = User.fromJson(v);
     _streamController.sink.add(_user);
-    Navigator.pushReplacement(
-        _this.context, MaterialPageRoute(builder: (context) => const Home()));
+    Navigator.pushNamedAndRemoveUntil(_this.context, 'home', (route) => false);
   }
 
   static get userData => _user;

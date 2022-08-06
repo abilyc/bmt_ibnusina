@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   final BuildContext parentContext;
-  const NavBar({Key? key, required this.parentContext}) : super(key: key);
+  final GlobalKey<ScaffoldState> parentKey;
+  const NavBar({Key? key, required this.parentContext, required this.parentKey})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +14,20 @@ class NavBar extends StatelessWidget {
       child: ListView(
         children: [
           IconButton(
-              onPressed: () => Navigator.push(parentContext,
-                  MaterialPageRoute(builder: (context) => const Penyetoran())),
+              onPressed: () async {
+                await closeDrawer();
+                Navigator.pushNamed(parentKey.currentContext!, 'setor');
+              },
               icon: const Icon(Icons.abc)),
           const Text('Storan'),
           const Text('Penarikan'),
           const Text('Transfer'),
-
-
         ],
       ),
     );
+  }
+
+  Future<void> closeDrawer() async {
+    parentKey.currentState!.openEndDrawer();
   }
 }

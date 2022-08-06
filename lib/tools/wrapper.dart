@@ -8,7 +8,7 @@ import 'package:bmt_ibnusina/auth/services.dart';
 import 'navbar.dart';
 
 class Wrapper extends StatelessWidget {
-  const Wrapper(
+  Wrapper(
       {Key? key,
       required this.body,
       this.judul = 'BMT IBNU SINA',
@@ -23,34 +23,34 @@ class Wrapper extends StatelessWidget {
   final String judul;
   final bool menu;
   final String? screen;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     Auth.ctx(context);
     return SafeArea(
         child: Scaffold(
+          key: _scaffoldKey,
       appBar: CustomAppBar(
         child: AppBar(
+          foregroundColor: Theme.of(context).backgroundColor,
           automaticallyImplyLeading: menu,
           title: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: Center(child: Text(judul))),
+                Expanded(child: Center(child: Text(judul, style: TextStyle(decorationStyle: TextDecorationStyle.solid, color: Theme.of(context).backgroundColor),))),
                 !Platform.isAndroid ?
-                SizedBox(
-                  width: 55,
-                  height: 55,
-                  child: Padding(padding: const EdgeInsets.all(12), child: CloseWindowButton(colors: WindowButtonColors(mouseOver: Theme.of(context).primaryColorDark, mouseDown: Theme.of(context).primaryColorDark))),
-                ): const SizedBox()
+                SizedBox(width: 55, height: 55, child: GestureDetector(onTap: () => appWindow.close(), child: const Padding(padding: EdgeInsets.only(left: 30), child: Icon(Icons.close_rounded, size: 15))))
+                : const SizedBox()
               ],
             ),
           ),
           centerTitle: true,
         ),
       ),
-      drawer: NavBar(parentContext: context),
+      drawer: NavBar(parentContext: context, parentKey: _scaffoldKey),
       body: Container(
         constraints: const BoxConstraints(maxHeight: double.infinity),
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20.0),
@@ -61,18 +61,12 @@ class Wrapper extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 20,
-                    child: back
-                        ? IconButton(
-                            iconSize: 16,
-                            onPressed: () => Navigator.pop(context),
-                            icon: const BackButtonIcon())
-                        : const SizedBox(width: 0, height: 0),
-                  ),
+                  back ? GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: MouseRegion(cursor: SystemMouseCursors.click, child: Container(padding: const EdgeInsets.all(4), decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.black12), child: const Icon(Icons.arrow_back, size: 15)))
+                  ) : const SizedBox(),
+                  const SizedBox(height: 40),
                   Expanded(
                       child: Center(
                           child: Text(screen != null ? screen! : '',

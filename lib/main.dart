@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           'login':(context) => const LoginScreen(),
           'setor':(context) => const Penyetoran(),
         },
-        initialRoute: 'setor',
+        initialRoute: 'login',
     );
   }
 }

@@ -31,7 +31,7 @@ class TextFieldCust extends StatelessWidget {
                 color: Colors.transparent,
               ),
             ),
-            suffixIcon: (icon != null) ? IconButton(onPressed: () => onPressed, icon: Icon(icon!, size: 16,)) : null,
+            suffixIcon: (icon != null) ? IconButton(onPressed: onPressed !=null ? () => onPressed!() : null, icon: Icon(icon!, size: 16,)) : null,
             // suffixIcon: IconButton(
             //     onPressed: () {
             //       print('seacrh');

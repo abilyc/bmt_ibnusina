@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bmt_ibnusina/models/user.dart';
-import 'package:bmt_ibnusina/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class Auth {

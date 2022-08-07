@@ -1,3 +1,5 @@
+import 'package:bmt_ibnusina/auth/hasura.dart';
+import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/seach_nasabah.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
@@ -12,18 +14,19 @@ class Penyetoran extends StatefulWidget {
 
 class _PenyetoranState extends State<Penyetoran> {
   bool showDetail = false;
-  final dataNasabah = Nasabah(nama: 'Wiwin Sumiwin', ref: '', desc: '');
+  bool enabled = true;
+  late Nasabah dataNasabah;
   final TextEditingController noRek = TextEditingController();
   final TextEditingController refController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController jmlController = TextEditingController();
   final Map screenData = {'penyetoran': []};
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() => showDetail = true);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   setState(() => showDetail = true);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +38,17 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('No. Rek'),
           ),
           Expanded(
-            child: TextFieldCust(icon: Icons.search, controller: noRek),
+            child: TextFieldCust(
+                icon: Icons.search,
+                controller: noRek,
+                onPressed: enabled ? searchData : null),
           ),
         ],
       ),
     ];
     final List<Widget> detail = [
       const SizedBox(height: 60),
-      Text(dataNasabah.nama,
+      Text(dataNasabah.nama ?? '',
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       const SizedBox(height: 30),
       Row(
@@ -91,5 +97,19 @@ class _PenyetoranState extends State<Penyetoran> {
           const ElevatedButton(onPressed: null, child: Text('Konfirmasi'))
       ]),
     );
+  }
+
+  void searchData() async {
+    setState(() => enabled = false);
+
+    try {
+      dataNasabah = Nasabah.fromJson(await Hasura.query(trxQuery, v: {'_eq': noRek.text}));
+      if (dataNasabah.nama != null) setState(() => showDetail = true);
+      // print((data['data']['customer'] as List).isEmpty);
+    } catch (e) {
+      // print(e);
+    }
+
+    setState(() => enabled = true);
   }
 }

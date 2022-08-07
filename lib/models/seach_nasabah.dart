@@ -1,19 +1,12 @@
 class Nasabah {
-  String nama;
-  String ref;
-  String desc;
+  String? id;
+  String? nama;
 
-  Nasabah({this.nama = '', this.ref = '', this.desc = ''});
+  Nasabah({this.nama, this.id});
 
   Nasabah.fromJson(Map<String, dynamic> json)
-      : nama = json['data']['login']['username'],
-        ref = json['data']['login']['userId'],
-        desc = json['data']['login']['userRole'];
+      : nama = json['data']['customer'][0]['name'],
+        id = json['data']['customer'][0]['id'];
 
-  Map<String, dynamic> toJson() => {
-        'nama': nama,
-        'ref': ref,
-        'desc': desc
-      };
-
+  Map<String, dynamic> toJson() => {'id':id,'nama': nama};
 }

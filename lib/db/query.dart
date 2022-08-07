@@ -1,6 +1,8 @@
 const String trxQuery = r'''
   query GetCustomerTrx($_eq: String) {
     customer(where: {name: {_eq: $_eq}}) {
+      id
+      name
       trx_TABREG_cash_in {
         ref
         desc

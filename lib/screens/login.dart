@@ -1,8 +1,8 @@
+import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/auth/services.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:hasura_connect/hasura_connect.dart';
 // import 'dart:io';
 
 class LoginScreen extends StatefulWidget {
@@ -27,10 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 70,
-                width: double.infinity
-              ),
+              const SizedBox(height: 70, width: double.infinity),
               SizedBox(
                 width: 300,
                 child: TextField(
@@ -54,8 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide: BorderSide(
                         color: Colors.transparent,
                       )),
-                      prefixIcon: Icon(Icons.person, color: Theme.of(context).primaryColorDark)
-                    ),
+                      prefixIcon: Icon(Icons.person,
+                          color: Theme.of(context).primaryColorDark)),
                 ),
               ),
               const SizedBox(height: 20),
@@ -91,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: !loading
                     ? () async {
                         setState(() => loading = true);
-                        await login(nameController.text,
-                            passwordController.text);
+                        await login(
+                            nameController.text, passwordController.text);
                         setState(() => loading = false);
                       }
                     : null,
@@ -112,13 +109,11 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 login(String? username, String? password) async {
-  HasuraConnect hasuraConnect =
-      HasuraConnect('https://ibs-finance.hasura.app/v1/graphql');
-  try {
-    final data = await hasuraConnect.mutation(loginMutation,
-        variables: {"username": username, "password": password});
+  try{
+    final data = await Hasura.mutate(loginMutation, v: {"username": username, "password": password});
     Auth.user(data);
-  } catch (e) {
+    Hasura.headers = {'Authorization': 'Bearer ${Auth.userData.token}'};
+  }catch(e){
     Auth.streamError;
     ScaffoldMessenger.of(Auth.parentCtx)
         .showSnackBar(const SnackBar(content: Text('Login Gagal')));

@@ -75,6 +75,7 @@ class Wrapper extends StatelessWidget {
                   const SizedBox(width: 20),
                 ],
               ),
+              const SizedBox(height: 20),
               body,
             ],
           ),

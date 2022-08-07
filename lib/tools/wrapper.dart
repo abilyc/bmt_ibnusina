@@ -69,7 +69,7 @@ class Wrapper extends StatelessWidget {
                   const SizedBox(height: 40),
                   Expanded(
                       child: Center(
-                          child: Text(screen != null ? screen! : '',
+                          child: Text(screen ?? '',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15)))),
                   const SizedBox(width: 20),

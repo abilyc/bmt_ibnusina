@@ -33,12 +33,16 @@ class MyApp extends StatelessWidget {
         title: 'BMT Ibnu Sina',
         theme: ThemeData(
           primarySwatch: Colors.orange,
-          primaryColor: Colors.orange[1200],
+          primaryColor: Colors.orange,
           primaryColorLight: Colors.orange[200],
           primaryColorDark: Colors.orange[850],
+          disabledColor: Colors.orange[100],
           backgroundColor: const Color.fromARGB(255, 255, 236, 209),
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
+          inputDecorationTheme: const InputDecorationTheme(
+            contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 10)
+          )
         ),
         routes: {
           'home':(context) => const Home(),

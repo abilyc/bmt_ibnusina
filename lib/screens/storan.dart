@@ -66,7 +66,7 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Ref'),
           ),
           Expanded(
-            child: TextFieldCust(controller: ref),
+            child: TextFieldCust(enabled: !konfirmasi, controller: ref),
           ),
         ],
       ),
@@ -77,7 +77,7 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Desc'),
           ),
           Expanded(
-            child: TextFieldCust(controller: desc),
+            child: TextFieldCust(enabled: !konfirmasi, controller: desc),
           ),
         ],
       ),
@@ -88,7 +88,7 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Jumlah'),
           ),
           Expanded(
-            child: TextFieldCust(controller: jml),
+            child: TextFieldCust(enabled: !konfirmasi, controller: jml),
           ),
         ],
       )
@@ -171,6 +171,12 @@ class _PenyetoranState extends State<Penyetoran> {
       showSnackBar(data['data']['penyetoran']['success']
           ? 'Setor Success'
           : 'Setor Gagal');
+
+      if (data['data']['penyetoran']['success']) {
+        ref.text = '';
+        desc.text = '';
+        jml.text = '';
+      }
       konfirmasi = false;
     } catch (e) {
       showSnackBar('Terjadi Kesalahan');

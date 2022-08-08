@@ -5,9 +5,19 @@ class TextFieldCust extends StatelessWidget {
   final double? width;
   final double? height;
   final IconData? icon;
+  final bool enabled;
   final TextEditingController? controller;
   final Function? onPressed;
-  const TextFieldCust({Key? key, this.label, this.icon, this.height = 30, this.width, this.controller, this.onPressed}) : super(key: key);
+  const TextFieldCust(
+      {Key? key,
+      this.label,
+      this.icon,
+      this.height = 30,
+      this.width,
+      this.controller,
+      this.enabled = true,
+      this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +25,16 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
+          enabled: enabled,
           controller: controller,
           style: TextStyle(color: Theme.of(context).primaryColorDark),
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+            isDense: true,
+            isCollapsed: true,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
             label: (label != null) ? Text(label!) : null,
-            fillColor: Theme.of(context).primaryColorLight,
+            fillColor: enabled ? Theme.of(context).primaryColorLight : Theme.of(context).disabledColor,
             filled: true,
             enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
@@ -31,7 +45,14 @@ class TextFieldCust extends StatelessWidget {
                 color: Colors.transparent,
               ),
             ),
-            suffixIcon: (icon != null) ? IconButton(onPressed: onPressed !=null ? () => onPressed!() : null, icon: Icon(icon!, size: 16,)) : null,
+            suffixIcon: (icon != null)
+                ? IconButton(
+                    onPressed: onPressed != null ? () => onPressed!() : null,
+                    icon: Icon(
+                      icon!,
+                      size: 16,
+                    ))
+                : null,
             // suffixIcon: IconButton(
             //     onPressed: () {
             //       print('seacrh');

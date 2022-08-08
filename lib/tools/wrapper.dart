@@ -40,6 +40,7 @@ class Wrapper extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                screen == 'login' ? const SizedBox(width: 55) : const SizedBox(), 
                 Expanded(
                     child: Center(
                         child: Text(
@@ -57,7 +58,7 @@ class Wrapper extends StatelessWidget {
                             child: const Padding(
                                 padding: EdgeInsets.only(left: 30),
                                 child: Icon(Icons.close_rounded, size: 15))))
-                    : const SizedBox()
+                    : const SizedBox(width: 55, height: 55)
               ],
             ),
           ),
@@ -92,7 +93,7 @@ class Wrapper extends StatelessWidget {
                   const SizedBox(height: 40),
                   Expanded(
                       child: Center(
-                          child: Text(screen ?? '',
+                          child: Text(screen == 'login' || screen == null ? '' : screen!,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15)))),
                   const SizedBox(width: 20),

@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     return Wrapper(
+      screen: 'login',
       menu: false,
       back: false,
       body: Container(

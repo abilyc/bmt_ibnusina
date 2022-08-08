@@ -13,9 +13,9 @@ class NavBar extends StatelessWidget {
       child: ListView(
         children: [
           IconButton(
-              onPressed: () async {
-                await closeDrawer();
-                Navigator.pushNamed(parentKey.currentContext!, 'setor');
+              onPressed: (){
+                parentKey.currentState!.openEndDrawer();
+                Navigator.pushNamedAndRemoveUntil(context, 'setor', ModalRoute.withName('home'));
               },
               icon: const Icon(Icons.abc)),
           const Text('Storan'),
@@ -24,9 +24,5 @@ class NavBar extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> closeDrawer() async {
-    parentKey.currentState!.openEndDrawer();
   }
 }

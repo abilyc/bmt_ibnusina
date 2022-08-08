@@ -1,4 +1,5 @@
 import 'package:bmt_ibnusina/auth/hasura.dart';
+import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/nasabah_model.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
@@ -15,19 +16,22 @@ class Penyetoran extends StatefulWidget {
 class _PenyetoranState extends State<Penyetoran> {
   bool showDetail = false;
   bool enabled = true;
+  bool hasuraLoading = false;
   bool konfirmasi = false;
   bool detailLoading = false;
   Nasabah? dataNasabah;
-  final Map<String, TextEditingController> controller = {
-    'noRek': TextEditingController(),
-    'refController': TextEditingController(),
-    'descController': TextEditingController(),
-    'jmlController': TextEditingController(),
-  };
+  final TextEditingController noRek = TextEditingController();
+  final TextEditingController ref = TextEditingController();
+  final TextEditingController desc = TextEditingController();
+  final TextEditingController jml = TextEditingController();
 
   @override
   void dispose() {
-    controller.forEach((k, v) => v.dispose());
+    // controller.forEach((k, v) => v.dispose());
+    noRek.dispose();
+    ref.dispose();
+    desc.dispose();
+    jml.dispose();
     dataNasabah?.clear();
     super.dispose();
   }
@@ -44,13 +48,13 @@ class _PenyetoranState extends State<Penyetoran> {
           Expanded(
             child: TextFieldCust(
                 icon: Icons.search,
-                controller: controller['noRek'],
+                controller: noRek,
                 onPressed: enabled ? searchData : null),
           ),
         ],
       ),
     ];
-    final List<Widget> detail = [
+    List<Widget> detail = [
       const SizedBox(height: 60),
       Text(dataNasabah?.nama != null ? dataNasabah!.nama! : '',
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -62,7 +66,7 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Ref'),
           ),
           Expanded(
-            child: TextFieldCust(controller: controller['refController']),
+            child: TextFieldCust(controller: ref),
           ),
         ],
       ),
@@ -73,7 +77,7 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Desc'),
           ),
           Expanded(
-            child: TextFieldCust(controller: controller['descController']),
+            child: TextFieldCust(controller: desc),
           ),
         ],
       ),
@@ -84,7 +88,7 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Jumlah'),
           ),
           Expanded(
-            child: TextFieldCust(controller: controller['jmlController']),
+            child: TextFieldCust(controller: jml),
           ),
         ],
       )
@@ -102,7 +106,7 @@ class _PenyetoranState extends State<Penyetoran> {
           ElevatedButton(
               onPressed: () => setState(() => konfirmasi = true),
               child: const Text('Konfirmasi')),
-        if (konfirmasi && showDetail)
+        if (konfirmasi && showDetail && !hasuraLoading)
           Column(
             children: [
               const Text('Apakah anda yakin?'),
@@ -120,11 +124,14 @@ class _PenyetoranState extends State<Penyetoran> {
                 SizedBox(
                     width: 100,
                     child: ElevatedButton(
-                        onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Oke'))),
+                        // onPressed: () => ScaffoldMessenger.of(context)
+                        //     .showSnackBar(const SnackBar(content: Text('Oke'))),
+                        onPressed: konfirm,
                         child: const Text('Ok'))),
               ]),
             ],
-          )
+          ),
+        if (hasuraLoading) const CircularProgressIndicator()
       ]),
     );
   }
@@ -138,9 +145,9 @@ class _PenyetoranState extends State<Penyetoran> {
 
     try {
       dataNasabah = Nasabah.fromJson(
-          await Hasura.query(trxQuery, v: {'_eq': controller['noRek']!.text}));
+          await Hasura.query(trxQuery, v: {'_eq': noRek.text}));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Terjadi Kesalahan')));
+      showSnackBar('Terjadi Kesalahan');
     }
 
     setState(() {
@@ -148,4 +155,30 @@ class _PenyetoranState extends State<Penyetoran> {
       if (dataNasabah?.nama != null) showDetail = true;
     });
   }
+
+  void konfirm() async {
+    setState(() => hasuraLoading = true);
+    // final data;
+    try {
+      final data = await Hasura.mutate(setorMutation, v: {
+        'reference': ref.text,
+        'description': desc.text,
+        'amount': int.parse(jml.text),
+        'date': DateTime.now().toString(),
+        'cashIn': dataNasabah!.id
+      });
+
+      showSnackBar(data['data']['penyetoran']['success']
+          ? 'Setor Success'
+          : 'Setor Gagal');
+      konfirmasi = false;
+    } catch (e) {
+      showSnackBar('Terjadi Kesalahan');
+    }
+
+    setState(() => hasuraLoading = false);
+  }
+
+  void showSnackBar(String msg) =>
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 }

@@ -15,7 +15,7 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
-          controller: (controller != null) ? controller : null,
+          controller: controller,
           style: TextStyle(color: Theme.of(context).primaryColorDark),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),

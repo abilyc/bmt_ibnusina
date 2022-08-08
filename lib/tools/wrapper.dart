@@ -27,10 +27,10 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Auth.ctx(context);
+    Auth(_scaffoldKey, context);
     return SafeArea(
         child: Scaffold(
-          key: _scaffoldKey,
+      key: _scaffoldKey,
       appBar: CustomAppBar(
         child: AppBar(
           foregroundColor: Theme.of(context).backgroundColor,
@@ -40,10 +40,24 @@ class Wrapper extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: Center(child: Text(judul, style: TextStyle(decorationStyle: TextDecorationStyle.solid, color: Theme.of(context).backgroundColor),))),
-                !Platform.isAndroid ?
-                SizedBox(width: 55, height: 55, child: GestureDetector(onTap: () => appWindow.close(), child: const Padding(padding: EdgeInsets.only(left: 30), child: Icon(Icons.close_rounded, size: 15))))
-                : const SizedBox()
+                Expanded(
+                    child: Center(
+                        child: Text(
+                  judul,
+                  style: TextStyle(
+                      decorationStyle: TextDecorationStyle.solid,
+                      color: Theme.of(context).backgroundColor),
+                ))),
+                !Platform.isAndroid
+                    ? SizedBox(
+                        width: 55,
+                        height: 55,
+                        child: GestureDetector(
+                            onTap: () => appWindow.close(),
+                            child: const Padding(
+                                padding: EdgeInsets.only(left: 30),
+                                child: Icon(Icons.close_rounded, size: 15))))
+                    : const SizedBox()
               ],
             ),
           ),
@@ -62,10 +76,19 @@ class Wrapper extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  back ? GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: MouseRegion(cursor: SystemMouseCursors.click, child: Container(padding: const EdgeInsets.all(4), decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.black12), child: const Icon(Icons.arrow_back, size: 15)))
-                  ) : const SizedBox(),
+                  back
+                      ? GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(40),
+                                      color: Colors.black12),
+                                  child:
+                                      const Icon(Icons.arrow_back, size: 15))))
+                      : const SizedBox(),
                   const SizedBox(height: 40),
                   Expanded(
                       child: Center(

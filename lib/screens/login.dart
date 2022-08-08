@@ -109,13 +109,15 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 login(String? username, String? password) async {
-  try{
-    final data = await Hasura.mutate(loginMutation, v: {"username": username, "password": password});
+  try {
+    final data = await Hasura.mutate(loginMutation,
+        v: {"username": username, "password": password});
     Auth.user(data);
     Hasura.headers = {'Authorization': 'Bearer ${Auth.userData.token}'};
-  }catch(e){
-    Auth.streamError;
-    ScaffoldMessenger.of(Auth.parentCtx)
+  } catch (e) {
+    // Auth.streamError;
+    // print(Auth.context);
+    ScaffoldMessenger.of(Auth.parentContext)
         .showSnackBar(const SnackBar(content: Text('Login Gagal')));
   }
 }

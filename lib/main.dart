@@ -1,4 +1,3 @@
-import 'package:bmt_ibnusina/auth/services.dart';
 import 'package:bmt_ibnusina/screens/home.dart';
 import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (!Platform.isAndroid) {
     doWhenWindowReady(() {
-      const initialsize = Size(600, 450);
+      const initialsize = Size(600, 480);
       appWindow.size = initialsize;
       appWindow.maxSize = initialsize;
       appWindow.minSize = initialsize;
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Auth();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BMT Ibnu Sina',

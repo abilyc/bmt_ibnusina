@@ -24,7 +24,7 @@ class Auth {
         ins._parentContext, 'home', (route) => false);
   }
 
-  static get userData => _user;
+  static User get userData => _user!;
   // static get streamError => _streamController.addError('error');
   // static BuildContext get parentCtx => context;
   static GlobalKey<ScaffoldState> get prnKey => ins._parentKey;

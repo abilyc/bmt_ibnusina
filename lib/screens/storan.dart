@@ -7,7 +7,8 @@ import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class Penyetoran extends StatefulWidget {
-  const Penyetoran({Key? key}) : super(key: key);
+  final String? mode;
+  const Penyetoran({Key? key, this.mode}) : super(key: key);
 
   @override
   State<Penyetoran> createState() => _PenyetoranState();
@@ -23,6 +24,7 @@ class _PenyetoranState extends State<Penyetoran> {
   final TextEditingController noRek = TextEditingController();
   final TextEditingController ref = TextEditingController();
   final TextEditingController desc = TextEditingController();
+  final TextEditingController tujuan = TextEditingController();
   final TextEditingController jml = TextEditingController();
 
   @override
@@ -81,6 +83,18 @@ class _PenyetoranState extends State<Penyetoran> {
           ),
         ],
       ),
+      if(widget.mode == 'transfer')
+        Row(
+          children: [
+            const SizedBox(
+              width: 60,
+              child: Text('Tujuan'),
+            ),
+            Expanded(
+              child: TextFieldCust(enabled: !konfirmasi, controller: tujuan),
+            ),
+          ],
+        ),
       Row(
         children: [
           const SizedBox(
@@ -95,7 +109,7 @@ class _PenyetoranState extends State<Penyetoran> {
     ];
 
     return Wrapper(
-      screen: 'penyetoran'.toUpperCase(),
+      screen: (widget.mode ?? 'penyetoran').toUpperCase(),
       body: Wrap(alignment: WrapAlignment.center, runSpacing: 5, children: [
         ...data,
         const SizedBox(height: 60),

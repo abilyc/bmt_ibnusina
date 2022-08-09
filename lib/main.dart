@@ -42,12 +42,19 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.transparent,
           inputDecorationTheme: const InputDecorationTheme(
             contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 10)
+          ),
+          listTileTheme: ListTileThemeData(
+            contentPadding: const EdgeInsets.only(left: 25),
+            horizontalTitleGap: 5,
+            iconColor: Colors.orange[850],
+            
           )
         ),
         routes: {
           'home':(context) => const Home(),
           'login':(context) => const LoginScreen(),
           'setor':(context) => const Penyetoran(),
+          'transfer':(context) => const Penyetoran(mode: 'transfer'),
         },
         initialRoute: 'login',
     );

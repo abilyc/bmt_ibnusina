@@ -22,70 +22,72 @@ class _LoginScreenState extends State<LoginScreen> {
       screen: 'login',
       menu: false,
       back: false,
-      body: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 70, width: double.infinity),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: nameController,
-                  style: TextStyle(color: Theme.of(context).primaryColorDark),
-                  decoration: InputDecoration(
-                      // labelText: 'User Name',
-                      hintText: 'User Name',
-                      hintStyle:
-                          TextStyle(color: Theme.of(context).primaryColorDark),
-                      fillColor: Theme.of(context).primaryColorLight,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.5)),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // const SizedBox(height: 70, width: double.infinity),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: nameController,
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+                decoration: InputDecoration(
+                    // labelText: 'User Name',
+                    hintText: 'User Name',
+                    hintStyle:
+                        TextStyle(color: Theme.of(context).primaryColorDark),
+                    fillColor: Theme.of(context).primaryColorLight,
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.5)),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
-                      )),
-                      prefixIcon: Icon(Icons.person,
-                          color: Theme.of(context).primaryColorDark)),
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  style: TextStyle(color: Theme.of(context).primaryColorDark),
-                  decoration: InputDecoration(
-                      hintText: 'Password',
-                      hintStyle:
-                          TextStyle(color: Theme.of(context).primaryColorDark),
-                      fillColor: Theme.of(context).primaryColorLight,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.5)),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
                       ),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Colors.transparent,
-                      )),
-                      prefixIcon: Icon(Icons.lock,
-                          color: Theme.of(context).primaryColorDark)),
-                ),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.transparent,
+                    )),
+                    prefixIcon: Icon(Icons.person,
+                        color: Theme.of(context).primaryColorDark)),
               ),
-              const SizedBox(height: 80),
-              ElevatedButton(
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: passwordController,
+                obscureText: true,
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    hintStyle:
+                        TextStyle(color: Theme.of(context).primaryColorDark),
+                    fillColor: Theme.of(context).primaryColorLight,
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.5)),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.transparent,
+                    )),
+                    prefixIcon: Icon(Icons.lock,
+                        color: Theme.of(context).primaryColorDark)),
+              ),
+            ),
+            const SizedBox(height: 40),
+            SizedBox(
+              width: 150,
+              height: 40,
+              child: ElevatedButton(
                 onPressed: !loading
                     ? () async {
                         setState(() => loading = true);
@@ -98,11 +100,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2))
-                    : const Text('Login'),
-              )
-            ],
-          ),
+                        child: CircularProgressIndicator())
+                    : Center(
+                      child: Row(
+                        children: const [
+                          Icon(Icons.arrow_circle_right_rounded),
+                          Text('MASUK'),
+                        ],
+                      ),
+                    ),
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -73,35 +73,37 @@ class Wrapper extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  back
-                      ? GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(40),
-                                      color: Colors.black12),
-                                  child:
-                                      const Icon(Icons.arrow_back, size: 15))))
-                      : const SizedBox(),
-                  const SizedBox(height: 40),
-                  Expanded(
-                      child: Center(
-                          child: Text(screen == 'login' || screen == null ? '' : screen!,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15)))),
-                  const SizedBox(width: 20),
-                ],
-              ),
-              const SizedBox(height: 20),
-              body,
-            ],
+          child: Expanded(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    back
+                        ? GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(40),
+                                        color: Colors.black12),
+                                    child:
+                                        const Icon(Icons.arrow_back, size: 15))))
+                        : const SizedBox(),
+                    const SizedBox(height: 40),
+                    Expanded(
+                        child: Center(
+                            child: Text(screen == 'login' || screen == null ? '' : screen!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15)))),
+                    const SizedBox(width: 20),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                body,
+              ],
+            ),
           ),
         ),
       ),

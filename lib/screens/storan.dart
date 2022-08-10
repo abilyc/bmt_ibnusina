@@ -222,7 +222,7 @@ class _PenyetoranState extends State<Penyetoran> {
       }
       konfirmasi = false;
     } catch (e) {
-      print(e);
+      // print(e);
       showSnackBar('Terjadi Kesalahan');
     }
 

@@ -102,7 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                         child: CircularProgressIndicator())
                     : Center(
-                      child: Row(
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 10,
                         children: const [
                           Icon(Icons.arrow_circle_right_rounded),
                           Text('MASUK'),

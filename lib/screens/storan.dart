@@ -7,8 +7,8 @@ import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class Penyetoran extends StatefulWidget {
-  final String? mode;
-  const Penyetoran({Key? key, this.mode}) : super(key: key);
+  final String mode;
+  const Penyetoran({Key? key, required this.mode}) : super(key: key);
 
   @override
   State<Penyetoran> createState() => _PenyetoranState();
@@ -83,7 +83,7 @@ class _PenyetoranState extends State<Penyetoran> {
           ),
         ],
       ),
-      if(widget.mode == 'transfer')
+      if (widget.mode == 'transfer')
         Row(
           children: [
             const SizedBox(
@@ -109,7 +109,7 @@ class _PenyetoranState extends State<Penyetoran> {
     ];
 
     return Wrapper(
-      screen: (widget.mode ?? 'penyetoran').toUpperCase(),
+      screen: widget.mode.toUpperCase(),
       body: Wrap(alignment: WrapAlignment.center, runSpacing: 5, children: [
         ...data,
         const SizedBox(height: 60),
@@ -171,28 +171,58 @@ class _PenyetoranState extends State<Penyetoran> {
   }
 
   void konfirm() async {
+    Map<String, dynamic> konfirmData = {
+      'penyetoran': [
+        setorMutation,
+        {
+          'reference': ref.text,
+          'description': desc.text,
+          'amount': int.parse(jml.text),
+          'date': DateTime.now().toString(),
+          'cashIn': dataNasabah!.id
+        }
+      ],
+      'penarikan': [
+        penarikanMutation,
+        {
+          'reference': ref.text,
+          'description': desc.text,
+          'amount': int.parse(jml.text),
+          'date': DateTime.now().toString(),
+          'cashOut': dataNasabah!.id
+        }
+      ],
+      'transfer': [
+        transferMutation,
+        {
+          'reference': ref.text,
+          'description': desc.text,
+          'amount': int.parse(jml.text),
+          'date': DateTime.now().toString(),
+          'capitalAccountFROM': dataNasabah!.id,
+          'capitalAccountTO': tujuan.text
+        }
+      ]
+    };
     setState(() => hasuraLoading = true);
     // final data;
     try {
-      final data = await Hasura.mutate(setorMutation, v: {
-        'reference': ref.text,
-        'description': desc.text,
-        'amount': int.parse(jml.text),
-        'date': DateTime.now().toString(),
-        'cashIn': dataNasabah!.id
-      });
+      final data = await Hasura.mutate(konfirmData[widget.mode][0],
+          v: konfirmData[widget.mode][1]);
 
-      showSnackBar(data['data']['penyetoran']['success']
-          ? 'Setor Success'
-          : 'Setor Gagal');
+      showSnackBar(data['data'][widget.mode]['success']
+          ? '${widget.mode[1]} success'
+          : '${widget.mode[1]} gagal');
 
-      if (data['data']['penyetoran']['success']) {
+      if (data['data'][widget.mode]['success']) {
         ref.text = '';
         desc.text = '';
         jml.text = '';
+        tujuan.text = '';
       }
       konfirmasi = false;
     } catch (e) {
+      print(e);
       showSnackBar('Terjadi Kesalahan');
     }
 

@@ -87,7 +87,7 @@ class NavBar extends StatelessWidget {
             title: const Text('Penarikan'),
             onTap: (){
               parentKey.currentState!.openEndDrawer();
-              Navigator.pushNamedAndRemoveUntil(context, 'transfer', ModalRoute.withName('home'));
+              Navigator.pushNamedAndRemoveUntil(context, 'penarikan', ModalRoute.withName('home'));
             },
           ),
         ],

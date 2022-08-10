@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'screens/login.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:bmt_ibnusina/db/mutation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,14 +25,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'BMT Ibnu Sina',
-        theme: ThemeData(
+      debugShowCheckedModeBanner: false,
+      title: 'BMT Ibnu Sina',
+      theme: ThemeData(
           primarySwatch: Colors.orange,
           primaryColor: Colors.orange,
           primaryColorLight: Colors.orange[200],
@@ -41,22 +41,21 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.transparent,
           inputDecorationTheme: const InputDecorationTheme(
-            contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 10)
-          ),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 8, vertical: 10)),
           listTileTheme: ListTileThemeData(
             contentPadding: const EdgeInsets.only(left: 25),
             horizontalTitleGap: 5,
             iconColor: Colors.orange[850],
-            
-          )
-        ),
-        routes: {
-          'home':(context) => const Home(),
-          'login':(context) => const LoginScreen(),
-          'setor':(context) => const Penyetoran(),
-          'transfer':(context) => const Penyetoran(mode: 'transfer'),
-        },
-        initialRoute: 'login',
+          )),
+      routes: {
+        'home': (context) => const Home(),
+        'login': (context) => const LoginScreen(),
+        'setor': (context) => const Penyetoran(mode: 'penyetoran'),
+        'penarikan': (context) => const Penyetoran(mode: 'penarikan'),
+        'transfer': (context) => const Penyetoran(mode: 'transfer')
+      },
+      initialRoute: 'login',
     );
   }
 }

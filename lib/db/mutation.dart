@@ -29,3 +29,40 @@ const String setorMutation = r'''
     }
   }
 ''';
+
+const String penarikanMutation = r'''
+  mutation Penarikan (
+    $reference: String
+    $date: String
+    $description: String
+    $cashOut: ID!
+    $amount: Int!
+  ) {
+    penarikan(
+      reference: $reference
+      date: $date
+      description: $description
+      cashOut: $cashOut
+      amount: $amount
+    ) {
+      id
+      success
+    }
+  }
+''';
+
+const String transferMutation = r'''
+  mutation Transfer($reference: String, $date: String, $description: String, $amount: Int!, $capitalAccountFROM: ID!, $capitalAccountTO: ID!){
+    transfer(
+      reference: $reference 
+      date: $date
+      description: $description 
+      amount: $amount
+      capitalAccountFROM: $capitalAccountFROM 
+      capitalAccountTO: $capitalAccountTO 
+    ){
+      id
+      success
+    }
+  }
+''';

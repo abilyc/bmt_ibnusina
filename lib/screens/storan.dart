@@ -120,7 +120,7 @@ class _PenyetoranState extends State<Penyetoran> {
         if (showDetail && !konfirmasi)
           SizedBox(
             height: 40,
-            width: 150,
+            // width: 150,
             child: ElevatedButton(
                 onPressed: () => setState(() => konfirmasi = true),
                 child: Wrap(
@@ -139,21 +139,37 @@ class _PenyetoranState extends State<Penyetoran> {
               const SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(
+                    height: 40,
                     width: 100,
                     child: ElevatedButton(
                         onPressed: () => setState(() => konfirmasi = false),
                         style: const ButtonStyle(
                             backgroundColor:
                                 MaterialStatePropertyAll(Colors.red)),
-                        child: const Text('Batal'))),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 5,
+                          children: const [
+                            Icon(CupertinoIcons.xmark_seal_fill),
+                            Text('Batal'),
+                          ],
+                        ))),
                 const SizedBox(width: 10),
                 SizedBox(
+                    height: 40,
                     width: 100,
                     child: ElevatedButton(
                         // onPressed: () => ScaffoldMessenger.of(context)
                         //     .showSnackBar(const SnackBar(content: Text('Oke'))),
                         onPressed: konfirm,
-                        child: const Text('Ok'))),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 5,
+                          children: const [
+                            Icon(CupertinoIcons.checkmark_seal_fill),
+                            Text('Ok'),
+                          ],
+                        ))),
               ]),
             ],
           ),

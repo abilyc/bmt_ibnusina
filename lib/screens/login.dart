@@ -2,6 +2,7 @@ import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/auth/services.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'dart:io';
 
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 40),
             SizedBox(
-              width: 150,
+              width: 120,
               height: 40,
               child: ElevatedButton(
                 onPressed: !loading
@@ -102,16 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                         child: CircularProgressIndicator())
                     : Center(
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 10,
-                        children: const [
-                          Icon(Icons.arrow_circle_right_rounded),
-                          Text('MASUK'),
-                        ],
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 10,
+                          children: const [
+                            Icon(CupertinoIcons.arrowtriangle_right_circle_fill),
+                            Text('MASUK'),
+                          ],
+                        ),
                       ),
-                    ),
               ),
             )
           ],
@@ -128,6 +129,7 @@ login(String? username, String? password) async {
     Auth.user(data);
     Hasura.headers = {'Authorization': 'Bearer ${Auth.userData.token}'};
   } catch (e) {
+    // print(e);
     // Auth.streamError;
     // print(Auth.context);
     ScaffoldMessenger.of(Auth.parentContext)

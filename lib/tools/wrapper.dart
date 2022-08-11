@@ -34,6 +34,7 @@ class Wrapper extends StatelessWidget {
       appBar: CustomAppBar(
         child: AppBar(
           foregroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: menu,
           title: Center(
             child: Row(

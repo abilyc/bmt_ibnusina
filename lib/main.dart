@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'screens/login.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:bmt_ibnusina/db/mutation.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,11 +43,16 @@ class MyApp extends StatelessWidget {
           inputDecorationTheme: const InputDecorationTheme(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 8, vertical: 10)),
-          listTileTheme: ListTileThemeData(
-            contentPadding: const EdgeInsets.only(left: 25),
+          listTileTheme: const ListTileThemeData(
+            contentPadding: EdgeInsets.only(left: 25),
             horizontalTitleGap: 5,
-            iconColor: Colors.orange[850],
-          )),
+            iconColor: Colors.white,
+            textColor: Colors.white,
+            
+          ),
+          textTheme: GoogleFonts.robotoTextTheme()
+        ),
+          
       routes: {
         'home': (context) => const Home(),
         'login': (context) => const LoginScreen(),

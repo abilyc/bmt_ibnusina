@@ -4,6 +4,7 @@ import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/nasabah_model.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Penyetoran extends StatefulWidget {
@@ -117,9 +118,20 @@ class _PenyetoranState extends State<Penyetoran> {
         if (showDetail) ...detail,
         const SizedBox(height: 60),
         if (showDetail && !konfirmasi)
-          ElevatedButton(
-              onPressed: () => setState(() => konfirmasi = true),
-              child: const Text('Konfirmasi')),
+          SizedBox(
+            height: 40,
+            width: 150,
+            child: ElevatedButton(
+                onPressed: () => setState(() => konfirmasi = true),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 5,
+                  children: const [
+                    Icon(CupertinoIcons.cursor_rays),
+                    Text('Konfirmasi')
+                  ],
+                )),
+          ),
         if (konfirmasi && showDetail && !hasuraLoading)
           Column(
             children: [

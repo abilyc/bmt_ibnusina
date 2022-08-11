@@ -2,6 +2,7 @@ import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/nasabah_model.dart';
+import 'package:bmt_ibnusina/screens/history.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,11 @@ class _PenyetoranState extends State<Penyetoran> {
               ]),
             ],
           ),
-        if (hasuraLoading) const CircularProgressIndicator()
+        if (hasuraLoading) const CircularProgressIndicator(),
+        if(showDetail) Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [hisstory(dataNasabah)]
+        )
       ]),
     );
   }

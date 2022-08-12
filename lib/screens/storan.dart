@@ -5,6 +5,7 @@ import 'package:bmt_ibnusina/models/nasabah_model.dart';
 import 'package:bmt_ibnusina/screens/history.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Penyetoran extends StatefulWidget {
@@ -118,9 +119,20 @@ class _PenyetoranState extends State<Penyetoran> {
         if (showDetail) ...detail,
         const SizedBox(height: 60),
         if (showDetail && !konfirmasi)
-          ElevatedButton(
-              onPressed: () => setState(() => konfirmasi = true),
-              child: const Text('Konfirmasi')),
+          SizedBox(
+            height: 40,
+            // width: 150,
+            child: ElevatedButton(
+                onPressed: () => setState(() => konfirmasi = true),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 5,
+                  children: const [
+                    Icon(CupertinoIcons.cursor_rays),
+                    Text('Konfirmasi')
+                  ],
+                )),
+          ),
         if (konfirmasi && showDetail && !hasuraLoading)
           Column(
             children: [
@@ -128,21 +140,37 @@ class _PenyetoranState extends State<Penyetoran> {
               const SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(
+                    height: 40,
                     width: 100,
                     child: ElevatedButton(
                         onPressed: () => setState(() => konfirmasi = false),
                         style: const ButtonStyle(
                             backgroundColor:
                                 MaterialStatePropertyAll(Colors.red)),
-                        child: const Text('Batal'))),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 5,
+                          children: const [
+                            Icon(CupertinoIcons.xmark_seal_fill),
+                            Text('Batal'),
+                          ],
+                        ))),
                 const SizedBox(width: 10),
                 SizedBox(
+                    height: 40,
                     width: 100,
                     child: ElevatedButton(
                         // onPressed: () => ScaffoldMessenger.of(context)
                         //     .showSnackBar(const SnackBar(content: Text('Oke'))),
                         onPressed: konfirm,
-                        child: const Text('Ok'))),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 5,
+                          children: const [
+                            Icon(CupertinoIcons.checkmark_seal_fill),
+                            Text('Ok'),
+                          ],
+                        ))),
               ]),
             ],
           ),

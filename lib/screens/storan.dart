@@ -177,7 +177,7 @@ class _PenyetoranState extends State<Penyetoran> {
         if (hasuraLoading) const CircularProgressIndicator(),
         if(showDetail) Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [hisstory(dataNasabah)]
+          children: [history(dataNasabah!.trxIn, widget.mode)]
         )
       ]),
     );

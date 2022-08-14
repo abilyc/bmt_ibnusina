@@ -3,35 +3,22 @@ import 'package:bmt_ibnusina/models/transaksi_model.dart';
 class Nasabah {
   String? id;
   String? nama;
-  List<Trx>? trxIn;
-  List<Trx>? trIn;
-  List<Trx>? trxOut;
-  List<Trx>? trOut;
+  int? balance;
+  List<Trx>? history;
 
-  Nasabah({this.nama, this.id, this.trxIn, this.trxOut});
+  Nasabah({this.nama, this.id, this.balance ,this.history});
 
   Nasabah.fromJson(Map<String, dynamic> json)
-      : nama = json['data']['customer'][0]['name'],
-        id = json['data']['customer'][0]['id'],
-        trxIn = List<Trx>.from(
-            (json['data']['customer'][0]['trx_TABREG_cash_in']).map((e) {
-          if (e['customer_cash_out'] == null) return Trx.fromJson(e, 'trxIn');
-        })).toList(),
-        trIn = List<Trx>.from(
-            (json['data']['customer'][0]['trx_TABREG_cash_in']).map((e) {
-          if (e['customer_cash_out'] != null) return Trx.fromJson(e, 'trIn');
-        })).toList(),
-        trxOut = List<Trx>.from(
-            (json['data']['customer'][0]['trx_TABREG_cash_out']).map((e) { if(e['customer_cash_out'] == null) return Trx.fromJson(e, 'trxOut');})).toList(),
-        trOut = List<Trx>.from(
-            (json['data']['customer'][0]['trx_TABREG_cash_out']).map((e) { if(e['customer_cash_out'] != null) return Trx.fromJson(e, 'trOut');})).toList();
+      : nama = json['data']['getTrxByCustomerId']['name'],
+        id = json['data']['getTrxByCustomerId']['id'],
+        balance = json['data']['getTrxByCustomerId']['balance'],
+        history = List<Trx>.from(json['data']['getTrxByCustomerId']['history'].map((e) => Trx.fromJson(e)).toList());
 
-  Map<String, dynamic> toJson() => {'id': id, 'nama': nama};
+  Map<String, dynamic> toJson() => {'id': id, 'nama': nama, 'balance': balance};
 
   void clear() {
     id = null;
     nama = null;
-    trxIn = null;
-    trxOut = null;
+    history = null;
   }
 }

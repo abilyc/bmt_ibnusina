@@ -175,10 +175,10 @@ class _PenyetoranState extends State<Penyetoran> {
             ],
           ),
         if (hasuraLoading) const CircularProgressIndicator(),
-        if(showDetail) Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [history(dataNasabah!.trxIn, widget.mode)]
-        )
+        if (showDetail)
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [history(dataNasabah!.history!)])
       ]),
     );
   }
@@ -192,8 +192,9 @@ class _PenyetoranState extends State<Penyetoran> {
 
     try {
       dataNasabah = Nasabah.fromJson(
-          await Hasura.query(trxQuery, v: {'_eq': noRek.text}));
+          await Hasura.query(trxQuery, v: {'id': noRek.text}));
     } catch (e) {
+      print(e);
       showSnackBar('Terjadi Kesalahan');
     }
 

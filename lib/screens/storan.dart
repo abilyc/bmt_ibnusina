@@ -175,10 +175,13 @@ class _PenyetoranState extends State<Penyetoran> {
             ],
           ),
         if (hasuraLoading) const CircularProgressIndicator(),
-        if (showDetail)
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [history(dataNasabah!.history!)])
+        if (showDetail && dataNasabah?.history != null)
+          ...[
+            const SizedBox(height: 95),
+            const Center(child: Text('History', style: TextStyle(fontWeight: FontWeight.w800))),
+            const SizedBox(height: 40),
+            history(dataNasabah!.history!)
+            ]
       ]),
     );
   }
@@ -192,9 +195,8 @@ class _PenyetoranState extends State<Penyetoran> {
 
     try {
       dataNasabah = Nasabah.fromJson(
-          await Hasura.query(trxQuery, v: {'id': noRek.text}));
+          await Hasura.query(trxQuery, v: {'code': noRek.text}));
     } catch (e) {
-      print(e);
       showSnackBar('Terjadi Kesalahan');
     }
 

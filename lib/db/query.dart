@@ -1,6 +1,6 @@
 const String trxQuery = r'''
-  query history($id: String!){
-    getTrxByCustomerId(id: $id){
+  query getTrxByCustomerCode($code: String!){
+    getTrxByCustomerCode(code: $code){
       id
       name
       balance

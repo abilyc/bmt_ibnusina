@@ -6,19 +6,23 @@ class Nasabah {
   int? balance;
   List<Trx>? history;
 
-  Nasabah({this.nama, this.id, this.balance ,this.history});
+  Nasabah({this.nama, this.id, this.balance, this.history});
 
   Nasabah.fromJson(Map<String, dynamic> json)
-      : nama = json['data']['getTrxByCustomerId']['name'],
-        id = json['data']['getTrxByCustomerId']['id'],
-        balance = json['data']['getTrxByCustomerId']['balance'],
-        history = List<Trx>.from(json['data']['getTrxByCustomerId']['history'].map((e) => Trx.fromJson(e)).toList());
+      : nama = json['data']['getTrxByCustomerCode']['name'],
+        id = json['data']['getTrxByCustomerCode']['id'],
+        balance = json['data']['getTrxByCustomerCode']['balance'],
+        history = List<Trx>.from(
+            (json['data']['getTrxByCustomerCode']['history'] as List)
+                .map((e) => Trx.fromJson(e))
+                .toList());
 
   Map<String, dynamic> toJson() => {'id': id, 'nama': nama, 'balance': balance};
 
   void clear() {
     id = null;
     nama = null;
+    balance = null;
     history = null;
   }
 }

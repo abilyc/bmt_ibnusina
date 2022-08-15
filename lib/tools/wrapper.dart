@@ -69,14 +69,15 @@ class Wrapper extends StatelessWidget {
       drawer: NavBar(parentContext: context, parentKey: _scaffoldKey),
       body: Container(
         constraints: const BoxConstraints(maxHeight: double.infinity),
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 19),
+              child: Row(
                 children: [
                   back
                       ? GestureDetector(
@@ -100,10 +101,21 @@ class Wrapper extends StatelessWidget {
                   const SizedBox(width: 20),
                 ],
               ),
-              const SizedBox(height: 20),
-              body,
-            ],
-          ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      body,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     ));

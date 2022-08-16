@@ -55,4 +55,5 @@ pubspec.lock
 /web
 /windows
 .gitignore
+.metadata
 analysis_options.yaml

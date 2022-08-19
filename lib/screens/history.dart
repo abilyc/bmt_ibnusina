@@ -17,7 +17,7 @@ Widget history(List<Trx> data) {
         children: [
           Center(child: Text(e.type!.toUpperCase())),
           Center(child: Text('Rp. ${e.amount}', style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18))),
-          Center(child: Text(e.date!))
+          Center(child: Text('${e.date}'))
         ],
       )))
   );

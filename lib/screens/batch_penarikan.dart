@@ -1,10 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class BatchPenarikan extends StatefulWidget {
   const BatchPenarikan({super.key});

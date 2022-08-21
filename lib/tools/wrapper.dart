@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:bmt_ibnusina/tools/appbar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:bmt_ibnusina/auth/services.dart';
 
@@ -116,6 +117,7 @@ class Wrapper extends StatelessWidget {
             ),
             Expanded(
               child: SingleChildScrollView(
+                reverse: screen == 'BATCH PENARIKAN' ? true : false,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(

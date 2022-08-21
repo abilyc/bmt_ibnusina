@@ -53,12 +53,6 @@ class TextFieldCust extends StatelessWidget {
                       size: 16,
                     ))
                 : null,
-            // suffixIcon: IconButton(
-            //     onPressed: () {
-            //       print('seacrh');
-            //     },
-            //     icon: const Icon(icon)
-            // ),
           )),
     );
   }

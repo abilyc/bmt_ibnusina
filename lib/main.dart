@@ -56,7 +56,8 @@ class MyApp extends StatelessWidget {
           
       routes: {
         'home': (context) => const Home(),
-        'login': (context) => const LoginScreen(),
+        // 'login': (context) => const LoginScreen(),
+        'login': (context) => const BatchPenarikan(),
         'setor': (context) => const Penyetoran(mode: 'penyetoran'),
         'batch_penarikan': (context) => const BatchPenarikan(),
         'penarikan': (context) => const Penyetoran(mode: 'penarikan'),

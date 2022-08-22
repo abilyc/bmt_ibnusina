@@ -1,4 +1,5 @@
 import 'package:bmt_ibnusina/screens/home.dart';
+import 'package:bmt_ibnusina/screens/profile.dart';
 import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
           
       routes: {
         'home': (context) => const Home(),
-        'login': (context) => const LoginScreen(),
+        // 'login': (context) => const LoginScreen(),
+        'login': (context) => const MyProfile(),
         'setor': (context) => const Penyetoran(mode: 'penyetoran'),
         'penarikan': (context) => const Penyetoran(mode: 'penarikan'),
         'transfer': (context) => const Penyetoran(mode: 'transfer')

@@ -13,3 +13,14 @@ const String trxQuery = r'''
     }
   }
 ''';
+
+const String customerQuery = r'''
+  query Customer {
+    customer {
+      id
+      code
+      name
+    }
+  }
+''';
+

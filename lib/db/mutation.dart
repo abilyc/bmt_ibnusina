@@ -51,6 +51,25 @@ const String penarikanMutation = r'''
   }
 ''';
 
+const String batchPenarikanMutation = r'''
+  mutation PenarikanBatch(
+    $date: String
+    $description: String
+    $reference: String
+    $input: [FormInput]
+  ) {
+    penarikanBatch(
+      date: $date
+      description: $description
+      reference: $reference
+      input: $input
+    ) {
+      id
+      success
+    }
+  }
+''';
+
 const String transferMutation = r'''
   mutation Transfer($reference: String, $date: String, $description: String, $amount: Int!, $capitalAccountFROM: ID!, $capitalAccountTO: ID!){
     transfer(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldCust extends StatelessWidget {
   final String? label;
   final double? width;
   final double? height;
+  final List<TextInputFormatter>? inputFormatter;
   final IconData? icon;
   final bool enabled;
   final TextInputType? keyboardType;
@@ -12,6 +14,7 @@ class TextFieldCust extends StatelessWidget {
   final FocusNode? focusNode;
   const TextFieldCust(
       {Key? key,
+      this.inputFormatter,
       this.focusNode,
       this.label,
       this.icon,
@@ -30,6 +33,7 @@ class TextFieldCust extends StatelessWidget {
       height: height,
       child: TextField(
           enabled: enabled,
+          inputFormatters: inputFormatter,
           keyboardType: keyboardType ?? TextInputType.text,
           controller: controller,
           style: TextStyle(color: Theme.of(context).primaryColorDark),

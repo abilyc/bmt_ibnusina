@@ -4,10 +4,12 @@ import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/customers_model.dart';
+import 'package:bmt_ibnusina/tools/my_formatter.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BatchPenarikan extends StatefulWidget {
   const BatchPenarikan({super.key});
@@ -38,28 +40,15 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
   void mutate() async {
     final List<Map<String, dynamic>> data = [];
     for (int i = 0; i < idController.length; i++) {
-      data.add({'id': idController[i].text, 'amount': int.parse(amountController[i].text), 'decsription': refDateDesc[2].text});
+      data.add({'customerId': idController[i].text, 'amount': int.parse(amountController[i].text)});
     }
 
     try{
-    
-      await Hasura.mutate(batchPenarikanMutation, v: {'date': refDateDesc[1].text, 'description': refDateDesc[2].text, 'reference': refDateDesc[0].text, 'input': data});
+      await Hasura.mutate(batchPenarikanMutation, v: {'date': DateFormat('yyyy-MM-dd').parse(refDateDesc[1].text).toString(), 'description': refDateDesc[2].text, 'reference': refDateDesc[0].text, 'input': data});
       print('success');
     }catch(e){
       print('error : $e');
     }
-    
-    
-    // print(jsonEncode(data));
-    // print(
-    //     'isi controller > nama : ${codeController[0].text}, id : ${idController[0].text}');
-    // print(customers[0].name);
-    // final List<Map<String, dynamic>> data = [];
-    // for (int i = 0; i <= counter; i++) {
-    // print(
-    // "{'amount': ${amountController[i].text}, 'description': ${refDateDesc[0].text}}");
-    // data.add({'amount': amountController[i].value, 'description': refDateDesc[0]});
-    // }
   }
 
   Future getCustomer() async {
@@ -105,9 +94,14 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                   children: [
                     const SizedBox(width: 40, child: Text('Date')),
                     Expanded(
-                        child: TextFieldCust(
-                            controller: refDateDesc[1],
-                            keyboardType: TextInputType.datetime))
+                      child: TextFieldCust(
+                          controller: refDateDesc[1],
+                          keyboardType: TextInputType.datetime,
+                          inputFormatter: [
+                            MyFormatter(sample: 'xx-xx-xxxx', sparator: '-')
+                          ],
+                      )
+                    )
                   ],
                 ),
               ),

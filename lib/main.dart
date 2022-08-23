@@ -1,3 +1,4 @@
+import 'package:bmt_ibnusina/screens/batch_penarikan.dart';
 import 'package:bmt_ibnusina/screens/home.dart';
 import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) => const Home(),
         'login': (context) => const LoginScreen(),
+        'batch_penarikan': (context) => const BatchPenarikan(),
         'setor': (context) => const Penyetoran(mode: 'penyetoran'),
         'penarikan': (context) => const Penyetoran(mode: 'penarikan'),
         'transfer': (context) => const Penyetoran(mode: 'transfer')

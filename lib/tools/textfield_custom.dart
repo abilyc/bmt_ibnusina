@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldCust extends StatelessWidget {
   final String? label;
   final double? width;
   final double? height;
+  final List<TextInputFormatter>? inputFormatter;
   final IconData? icon;
   final bool enabled;
+  final TextInputType? keyboardType;
   final TextEditingController? controller;
   final Function? onPressed;
+  final FocusNode? focusNode;
   const TextFieldCust(
       {Key? key,
+      this.inputFormatter,
+      this.focusNode,
       this.label,
       this.icon,
+      this.keyboardType,
       this.height = 30,
       this.width,
       this.controller,
@@ -26,6 +33,8 @@ class TextFieldCust extends StatelessWidget {
       height: height,
       child: TextField(
           enabled: enabled,
+          inputFormatters: inputFormatter,
+          keyboardType: keyboardType ?? TextInputType.text,
           controller: controller,
           style: TextStyle(color: Theme.of(context).primaryColorDark),
           decoration: InputDecoration(
@@ -34,7 +43,9 @@ class TextFieldCust extends StatelessWidget {
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
             label: (label != null) ? Text(label!) : null,
-            fillColor: enabled ? Theme.of(context).primaryColorLight : Theme.of(context).disabledColor,
+            fillColor: enabled
+                ? Theme.of(context).primaryColorLight
+                : Theme.of(context).disabledColor,
             filled: true,
             enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
@@ -53,12 +64,6 @@ class TextFieldCust extends StatelessWidget {
                       size: 16,
                     ))
                 : null,
-            // suffixIcon: IconButton(
-            //     onPressed: () {
-            //       print('seacrh');
-            //     },
-            //     icon: const Icon(icon)
-            // ),
           )),
     );
   }

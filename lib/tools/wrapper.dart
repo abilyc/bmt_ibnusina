@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:bmt_ibnusina/tools/appbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bmt_ibnusina/auth/services.dart';
 
@@ -90,7 +91,7 @@ class Wrapper extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(40),
                                       color: Colors.black12),
                                   child:
-                                      const Icon(Icons.arrow_back, size: 15))))
+                                      const Icon(CupertinoIcons.arrowtriangle_left_fill, size: 15))))
                       : const SizedBox(),
                   const SizedBox(height: 40),
                   Expanded(
@@ -98,7 +99,18 @@ class Wrapper extends StatelessWidget {
                           child: Text(screen == 'login' || screen == null ? '' : screen!,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15)))),
-                  const SizedBox(width: 20),
+                  screen == 'PENARIKAN' ? GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, 'batch_penarikan'),
+                          child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(40),
+                                      color: Colors.black12),
+                                  child:
+                                      const Icon(CupertinoIcons.flowchart_fill, size: 15))))
+                                      : const SizedBox(width: 20),
                 ],
               ),
             ),
@@ -109,7 +121,7 @@ class Wrapper extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      body,
+                      body
                     ],
                   ),
                 ),

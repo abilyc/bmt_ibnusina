@@ -12,13 +12,12 @@ class MyProfile extends StatelessWidget {
     final TextEditingController confPassController = TextEditingController();
     return Wrapper(
         screen: 'PROFILE',
-        body: Wrap(
-          alignment: WrapAlignment.center,
-          runAlignment: WrapAlignment.center,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFieldCust(controller: namaController),
             TextFieldCust(controller: passController),
-            TextFieldCust(controller: confPassController)
+            TextFieldCust(controller: confPassController),
           ],
         ));
   }

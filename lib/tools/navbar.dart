@@ -27,7 +27,7 @@ class NavBar extends StatelessWidget {
             accountEmail: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: Text('${Auth.userData.userName}@gmail.com')),
+                Expanded(child: Text(Auth.userData.userRole)),
                 GestureDetector(
                   child: const Icon(CupertinoIcons.gear_solid,
                       size: 18, color: Colors.white),
@@ -48,6 +48,7 @@ class NavBar extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
+          if(Auth.userData.userRole == 'manager')
           ListTile(
             leading: const Icon(CupertinoIcons.person_crop_circle_badge_plus),
             title: const Text('Tambah User'),

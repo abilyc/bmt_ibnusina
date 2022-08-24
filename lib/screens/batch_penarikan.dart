@@ -22,6 +22,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
   int counter = 0;
   bool konfirmasi = false;
   bool isLoading = false;
+  bool loading = false;
   // String? _selected;
   late List<Customer> customers;
   final List<TextEditingController> codeController = [TextEditingController()];
@@ -38,6 +39,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
   ];
 
   void mutate() async {
+    setState(()=>loading=true);
     final List<Map<String, dynamic>> data = [];
     for (int i = 0; i < idController.length; i++) {
       data.add({'customerId': idController[i].text, 'amount': int.parse(amountController[i].text)});
@@ -49,6 +51,10 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
     }catch(e){
       print('error : $e');
     }
+    setState((){
+      loading=false;
+      konfirmasi=false;
+    });
   }
 
   Future getCustomer() async {
@@ -224,7 +230,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
               ],
             ),
           const SizedBox(height: 20),
-          if (!konfirmasi)
+          if (!konfirmasi && !loading)
             SizedBox(
               height: 40,
               // width: 150,
@@ -238,8 +244,8 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                       Text('Konfirmasi')
                     ],
                   )),
-            )
-          else
+            ),
+          if(konfirmasi && !loading)
             Column(
               children: [
                 const Text('Apakah anda yakin?'),
@@ -266,8 +272,6 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                       height: 40,
                       width: 100,
                       child: ElevatedButton(
-                          // onPressed: () => ScaffoldMessenger.of(context)
-                          //     .showSnackBar(const SnackBar(content: Text('Oke'))),
                           onPressed: mutate,
                           child: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
@@ -280,6 +284,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                 ]),
               ],
             ),
+          if(loading) const CircularProgressIndicator(),
           const SizedBox(height: 20),
         ]));
   }

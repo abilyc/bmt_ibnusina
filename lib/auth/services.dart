@@ -7,7 +7,11 @@ class Auth {
 
   static User? _user;
 
-  static void user(v) => _user = User.fromJson(v);
+  // static void user(v) => _user = User.fromJson(v);
+  static void user(v) {
+    _user = User.fromJson(v);
+    print(_user!.userRole);
+  }
 
   static User get userData => _user!;
 

@@ -3,6 +3,10 @@ import 'package:flutter/services.dart';
 
 class TextFieldCust extends StatelessWidget {
   final String? label;
+  final TextAlign align;
+  final Function(String)? onChanged;
+  final String? hint;
+  final bool obscure;
   final double? width;
   final double? height;
   final List<TextInputFormatter>? inputFormatter;
@@ -15,8 +19,12 @@ class TextFieldCust extends StatelessWidget {
   const TextFieldCust(
       {Key? key,
       this.inputFormatter,
+      this.onChanged,
+      this.hint,
+      this.obscure = false,
       this.focusNode,
       this.label,
+      this.align = TextAlign.left,
       this.icon,
       this.keyboardType,
       this.height = 30,
@@ -32,12 +40,17 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
+          onChanged: onChanged,
+          obscureText: obscure,
+          textAlign: align,
           enabled: enabled,
           inputFormatters: inputFormatter,
           keyboardType: keyboardType ?? TextInputType.text,
           controller: controller,
           style: TextStyle(color: Theme.of(context).primaryColorDark),
           decoration: InputDecoration(
+            hintStyle: const TextStyle(fontSize: 13, color: Colors.deepOrange),
+            hintText: hint ?? '',
             isDense: true,
             isCollapsed: true,
             contentPadding:

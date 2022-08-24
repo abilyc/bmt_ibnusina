@@ -28,11 +28,10 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Auth(_scaffoldKey, context);
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
+        resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
           child: AppBar(
             foregroundColor: Theme.of(context).backgroundColor,
@@ -76,7 +75,7 @@ class Wrapper extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 19),
-                child: Row(
+                child: menu ? Row(
                   children: [
                     back
                         ? GestureDetector(
@@ -110,7 +109,7 @@ class Wrapper extends StatelessWidget {
                                         const Icon(CupertinoIcons.flowchart_fill, size: 15))))
                                         : const SizedBox(width: 20),
                   ],
-                ),
+                ) : const SizedBox.shrink(),
               ),
               Expanded(
                 child: Container(

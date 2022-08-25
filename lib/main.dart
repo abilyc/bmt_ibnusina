@@ -1,9 +1,10 @@
 import 'package:bmt_ibnusina/screens/batch_penarikan.dart';
 import 'package:bmt_ibnusina/screens/home.dart';
+import 'package:bmt_ibnusina/screens/profile.dart';
 import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'screens/login.dart';
+import 'package:bmt_ibnusina/screens/login.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -57,6 +58,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) => const Home(),
         'login': (context) => const LoginScreen(),
+        'myProfile': (context) => const MyProfile(mode: 'profile'), 
+        'newUser': (context) => const MyProfile(mode: 'tambah user'), 
         'batch_penarikan': (context) => const BatchPenarikan(),
         'setor': (context) => const Penyetoran(mode: 'penyetoran'),
         'penarikan': (context) => const Penyetoran(mode: 'penarikan'),

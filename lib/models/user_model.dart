@@ -18,4 +18,11 @@ class User {
         'userRole': userRole,
         'token': token
       };
+
+  void dispose() {
+    userName = null;
+    userId = null;
+    userRole = null;
+    token = null;
+  }
 }

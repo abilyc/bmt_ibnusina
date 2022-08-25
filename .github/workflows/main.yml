@@ -1,0 +1,22 @@
+name: My Actions
+
+on:
+  push:
+    branch: main
+  pull_request:
+    branch: main
+
+jobs:
+  test:
+    run-os: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3.4.1
+        with:
+          java-version: 12.x
+      - uses: subosito/flutter-action@v2.6.1
+        with:
+          flutter-version: 3.1.0-0.0.pre.2125
+          channel: master
+      - run: flutter pub get
+      - run: flutter test

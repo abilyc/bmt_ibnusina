@@ -9,6 +9,32 @@ const String loginMutation = r"""
 }
 """;
 
+const String gantiPwMutation = r'''
+mutation gantiPw($newUserName: String!, $newPass: String!) {
+  changeUsrPsw(newPass: $newPass, newUsrName: $newUserName) {
+    token
+  }
+}
+''';
+
+const String newCustomer = r'''
+  mutation addNewCustomer(
+    $username: String!
+    $password: String!
+    $code: String!
+  ) {
+    addNewCustomer(
+      username: $username
+      password: $password
+      code: $code
+      status: true
+    ) {
+      success
+      message
+    }
+  }
+''';
+
 const String setorMutation = r'''
   mutation Penyetoran (
     $reference: String
@@ -44,6 +70,25 @@ const String penarikanMutation = r'''
       description: $description
       cashOut: $cashOut
       amount: $amount
+    ) {
+      id
+      success
+    }
+  }
+''';
+
+const String batchPenarikanMutation = r'''
+  mutation PenarikanBatch(
+    $date: String
+    $description: String
+    $reference: String
+    $input: [FormInput]
+  ) {
+    penarikanBatch(
+      date: $date
+      description: $description
+      reference: $reference
+      input: $input
     ) {
       id
       success

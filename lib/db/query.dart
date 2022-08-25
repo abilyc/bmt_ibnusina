@@ -1,28 +1,26 @@
 const String trxQuery = r'''
-  query GetCustomerTrx($_eq: String) {
-    customer(where: {name: {_eq: $_eq}}) {
+  query getTrxByCustomerCode($code: String!){
+    getTrxByCustomerCode(code: $code){
       id
       name
-      trx_TABREG_cash_in {
+      balance
+      history {
+        type
         ref
-        desc
         amount
         date
-        customer_cash_out {
-          id
-          name
-        }
-      }
-      trx_TABREG_cash_out {
-        ref
-        desc
-        amount
-        customer_cash_in {
-          id
-          name
-        }
       }
     }
   }
-
 ''';
+
+const String customerQuery = r'''
+  query Customer {
+    customer {
+      id
+      code
+      name
+    }
+  }
+''';
+

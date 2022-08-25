@@ -45,11 +45,13 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
       data.add({'customerId': idController[i].text, 'amount': int.parse(amountController[i].text)});
     }
 
+    final message = ScaffoldMessenger.of(context);
+
     try{
       await Hasura.mutate(batchPenarikanMutation, v: {'date': DateFormat('yyyy-MM-dd').parse(refDateDesc[1].text).toString(), 'description': refDateDesc[2].text, 'reference': refDateDesc[0].text, 'input': data});
-      print('success');
+      message.showSnackBar(const SnackBar(content: Text('Berhasil')));
     }catch(e){
-      print('error : $e');
+      message.showSnackBar(const SnackBar(content: Text('Gagal')));
     }
     setState((){
       loading=false;

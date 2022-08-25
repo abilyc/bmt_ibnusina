@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
         Hasura.headers = {'Authorization': 'Bearer ${Auth.userData.token}'};
         nav.popAndPushNamed('home');
       } catch (e) {
-        print(e);
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Login Gagal')));
       }

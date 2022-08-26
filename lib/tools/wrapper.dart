@@ -36,32 +36,30 @@ class Wrapper extends StatelessWidget {
             foregroundColor: Theme.of(context).backgroundColor,
             backgroundColor: Theme.of(context).primaryColor,
             automaticallyImplyLeading: menu,
-            title: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  screen == 'login' ? const SizedBox(width: 55) : const SizedBox(), 
-                  Expanded(
-                      child: Center(
-                          child: Text(
-                    judul,
-                    style: TextStyle(
-                        decorationStyle: TextDecorationStyle.solid,
-                        color: Theme.of(context).backgroundColor),
-                  ))),
-                  !Platform.isAndroid
-                      ? SizedBox(
-                          width: 55,
-                          height: 55,
-                          child: GestureDetector(
-                              onTap: () => appWindow.close(),
-                              child: const Padding(
-                                  padding: EdgeInsets.only(left: 30),
-                                  child: Icon(Icons.close_rounded, size: 15))))
-                      : const SizedBox(width: 55, height: 55)
-                ],
-              ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                screen == 'login' ? const SizedBox(width: 55) : const SizedBox(), 
+                Expanded(
+                    child: Center(
+                        child: Text(
+                  judul,
+                  style: TextStyle(
+                      decorationStyle: TextDecorationStyle.solid,
+                      color: Theme.of(context).backgroundColor),
+                ))),
+                !Platform.isAndroid
+                    ? SizedBox(
+                        width: 55,
+                        height: 55,
+                        child: GestureDetector(
+                            onTap: () => appWindow.close(),
+                            child: const Padding(
+                                padding: EdgeInsets.only(left: 30),
+                                child: Icon(Icons.close_rounded, size: 15))))
+                    : const SizedBox(width: 55, height: 55)
+              ],
             ),
             centerTitle: true,
           ),
@@ -74,40 +72,43 @@ class Wrapper extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 19),
-                child: menu ? Row(
-                  children: [
-                    back
-                        ? GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Container(
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(40),
-                                        color: Colors.black12),
-                                    child:
-                                        const Icon(CupertinoIcons.arrowtriangle_left_fill, size: 15))))
-                        : const SizedBox(),
-                    const SizedBox(height: 40),
-                    Expanded(
-                        child: Center(
-                            child: Text(screen == 'login' || screen == null ? '' : screen!,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15)))),
-                    screen == 'PENARIKAN' ? GestureDetector(
-                            onTap: () => Navigator.pushNamed(context, 'batch_penarikan'),
-                            child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Container(
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(40),
-                                        color: Colors.black12),
-                                    child:
-                                        const Icon(CupertinoIcons.flowchart_fill, size: 15))))
-                                        : const SizedBox(width: 20),
-                  ],
+                child: menu ? Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    children: [
+                      back
+                          ? GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(40),
+                                          color: Colors.black12),
+                                      child:
+                                          const Icon(CupertinoIcons.arrowtriangle_left_fill, size: 15))))
+                          : const SizedBox(),
+                      const SizedBox(height: 40),
+                      Expanded(
+                          child: Center(
+                              child: Text(screen == 'login' || screen == null ? '' : screen!,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 15)))),
+                      screen == 'PENARIKAN' ? GestureDetector(
+                              onTap: () => Navigator.pushNamed(context, 'batch_penarikan'),
+                              child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(40),
+                                          color: Colors.black12),
+                                      child:
+                                          const Icon(CupertinoIcons.flowchart_fill, size: 15))))
+                                          : const SizedBox(width: 20),
+                    ],
+                  ),
                 ) : const SizedBox.shrink(),
               ),
               Expanded(

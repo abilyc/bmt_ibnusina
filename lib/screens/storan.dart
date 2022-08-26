@@ -113,77 +113,83 @@ class _PenyetoranState extends State<Penyetoran> {
     return Wrapper(
       screen: widget.mode.toUpperCase(),
       body: SingleChildScrollView(
-        child: Wrap(alignment: WrapAlignment.center, runSpacing: 5, children: [
-          ...data,
-          const SizedBox(height: 60),
-          if (!enabled) const CircularProgressIndicator(),
-          if (showDetail) ...detail,
-          const SizedBox(height: 60),
-          if (showDetail && !konfirmasi)
-            SizedBox(
-              height: 40,
-              // width: 150,
-              child: ElevatedButton(
-                  onPressed: () => setState(() => konfirmasi = true),
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 5,
-                    children: const [
-                      Icon(CupertinoIcons.cursor_rays),
-                      Text('Konfirmasi')
-                    ],
-                  )),
+        child: Column(
+          children: [
+            Wrap(alignment: WrapAlignment.center, runSpacing: 5, children: [
+              ...data,
+              const SizedBox(height: 60),
+              if (!enabled) const CircularProgressIndicator(),
+              if (showDetail) ...detail,
+              const SizedBox(height: 60),
+              if (showDetail && !konfirmasi)
+                SizedBox(
+                  height: 40,
+                  // width: 150,
+                  child: ElevatedButton(
+                      onPressed: () => setState(() => konfirmasi = true),
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 5,
+                        children: const [
+                          Icon(CupertinoIcons.cursor_rays),
+                          Text('Konfirmasi')
+                        ],
+                      )),
+                ),
+              if (konfirmasi && showDetail && !hasuraLoading)
+                Column(
+                  children: [
+                    const Text('Apakah anda yakin?'),
+                    const SizedBox(height: 10),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      SizedBox(
+                          height: 40,
+                          width: 100,
+                          child: ElevatedButton(
+                              onPressed: () => setState(() => konfirmasi = false),
+                              style: const ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll(Colors.red)),
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                spacing: 5,
+                                children: const [
+                                  Icon(CupertinoIcons.xmark_seal_fill),
+                                  Text('Batal'),
+                                ],
+                              ))),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                          height: 40,
+                          width: 100,
+                          child: ElevatedButton(
+                              // onPressed: () => ScaffoldMessenger.of(context)
+                              //     .showSnackBar(const SnackBar(content: Text('Oke'))),
+                              onPressed: konfirm,
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                spacing: 5,
+                                children: const [
+                                  Icon(CupertinoIcons.checkmark_seal_fill),
+                                  Text('Ok'),
+                                ],
+                              ))),
+                    ]),
+                  ],
+                ),
+              if (hasuraLoading) const CircularProgressIndicator(),
+              if (showDetail && dataNasabah?.history != null)
+                ...[
+                  const SizedBox(height: 95),
+                  const Center(child: Text('History', style: TextStyle(fontWeight: FontWeight.w800))),
+                  const SizedBox(height: 40),
+                  history(dataNasabah!.history!)
+                  ]
+            ]
             ),
-          if (konfirmasi && showDetail && !hasuraLoading)
-            Column(
-              children: [
-                const Text('Apakah anda yakin?'),
-                const SizedBox(height: 10),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  SizedBox(
-                      height: 40,
-                      width: 100,
-                      child: ElevatedButton(
-                          onPressed: () => setState(() => konfirmasi = false),
-                          style: const ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.red)),
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 5,
-                            children: const [
-                              Icon(CupertinoIcons.xmark_seal_fill),
-                              Text('Batal'),
-                            ],
-                          ))),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                      height: 40,
-                      width: 100,
-                      child: ElevatedButton(
-                          // onPressed: () => ScaffoldMessenger.of(context)
-                          //     .showSnackBar(const SnackBar(content: Text('Oke'))),
-                          onPressed: konfirm,
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 5,
-                            children: const [
-                              Icon(CupertinoIcons.checkmark_seal_fill),
-                              Text('Ok'),
-                            ],
-                          ))),
-                ]),
-              ],
-            ),
-          if (hasuraLoading) const CircularProgressIndicator(),
-          if (showDetail && dataNasabah?.history != null)
-            ...[
-              const SizedBox(height: 95),
-              const Center(child: Text('History', style: TextStyle(fontWeight: FontWeight.w800))),
-              const SizedBox(height: 40),
-              history(dataNasabah!.history!)
-              ]
-        ]),
+            const SizedBox(height: 100)
+          ],
+        ),
       ),
     );
   }

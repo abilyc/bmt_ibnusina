@@ -41,7 +41,7 @@ class MyProfile extends StatelessWidget {
     return Wrapper(
         screen: mode.toUpperCase(),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: Platform.isAndroid ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             SizedBox(
                 width: width,
@@ -51,6 +51,7 @@ class MyProfile extends StatelessWidget {
                     hint: mode == 'profile'
                         ? 'Ganti nama ${Auth.userData.userName}'
                         : 'Masukan nama baru')),
+            const SizedBox(height: 5),
             SizedBox(
                 width: width,
                 child: TextFieldCust(
@@ -58,6 +59,7 @@ class MyProfile extends StatelessWidget {
                     hint: 'Password baru',
                     align: TextAlign.center,
                     obscure: true)),
+            const SizedBox(height: 5),
             SizedBox(
                 width: width,
                 child: TextFieldCust(
@@ -66,7 +68,7 @@ class MyProfile extends StatelessWidget {
                     hint: 'Ulangi Password baru',
                     align: TextAlign.center,
                     onChanged: (e) => bloc.compare(e, passController.text))),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             StreamBuilder(
               initialData: false,
               stream: bloc.changed,
@@ -84,8 +86,7 @@ class MyProfile extends StatelessWidget {
                                   : Colors.green))
                       : const SizedBox()),
             ),
-            const SizedBox(height: 10),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             StreamBuilder(
                 stream: bloc.isLoading,
                 initialData: false,

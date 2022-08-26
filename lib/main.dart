@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:bmt_ibnusina/screens/login.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,9 @@ void main() {
       appWindow.show();
     });
   }
-  runApp(const MyApp());
+  initializeDateFormatting('en_US', null).then(
+    (_) => runApp(const MyApp()) 
+  );
 }
 
 class MyApp extends StatelessWidget {

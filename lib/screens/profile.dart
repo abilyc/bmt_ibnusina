@@ -50,13 +50,13 @@ class MyProfile extends StatelessWidget {
                     align: TextAlign.center,
                     hint: mode == 'profile'
                         ? 'Ganti nama ${Auth.userData.userName}'
-                        : 'Masukan nama baru')),
+                        : 'Masukan nama')),
             const SizedBox(height: 5),
             SizedBox(
                 width: width,
                 child: TextFieldCust(
                     controller: passController,
-                    hint: 'Password baru',
+                    hint: mode == 'profile'?'Password baru':'Password',
                     align: TextAlign.center,
                     obscure: true)),
             const SizedBox(height: 5),
@@ -65,7 +65,7 @@ class MyProfile extends StatelessWidget {
                 child: TextFieldCust(
                     obscure: true,
                     controller: confPassController,
-                    hint: 'Ulangi Password baru',
+                    hint: mode == 'profile'?'Ulangi Password baru':'Ulangi Password',
                     align: TextAlign.center,
                     onChanged: (e) => bloc.compare(e, passController.text))),
             const SizedBox(height: 5),

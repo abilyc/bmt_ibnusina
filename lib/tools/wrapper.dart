@@ -76,20 +76,14 @@ class Wrapper extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
                     children: [
+                      const SizedBox(height: 40),
                       back
                           ? GestureDetector(
                               onTap: () => Navigator.pop(context),
-                              child: MouseRegion(
+                              child:const MouseRegion(
                                   cursor: SystemMouseCursors.click,
-                                  child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(40),
-                                          color: Colors.black12),
-                                      child:
-                                          const Icon(CupertinoIcons.arrowtriangle_left_fill, size: 15))))
+                                  child: Icon(CupertinoIcons.arrowshape_turn_up_left_circle_fill, size: 32, color: Colors.grey,)))
                           : const SizedBox(),
-                      const SizedBox(height: 40),
                       Expanded(
                           child: Center(
                               child: Text(screen == 'login' || screen == null ? '' : screen!,
@@ -100,12 +94,13 @@ class Wrapper extends StatelessWidget {
                               child: MouseRegion(
                                   cursor: SystemMouseCursors.click,
                                   child: Container(
-                                      padding: const EdgeInsets.all(4),
+                                      width: 29,
+                                      height: 29,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(40),
-                                          color: Colors.black12),
+                                          color: Colors.grey),
                                       child:
-                                          const Icon(CupertinoIcons.flowchart_fill, size: 15))))
+                                          Icon(CupertinoIcons.table_fill, size: 15, color: Theme.of(context).backgroundColor))))
                                           : const SizedBox(width: 20),
                     ],
                   ),

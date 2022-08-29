@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: SizedBox(
                 width: 120,
-                height: 35,
+                height: 45,
                 child: ElevatedButton(
                   onPressed: !loading
                       ? () async {

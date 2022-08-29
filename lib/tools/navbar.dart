@@ -20,8 +20,7 @@ class NavBar extends StatelessWidget {
 
     return Drawer(
       backgroundColor: Colors.cyan,
-      child: Container(
-        child: ListView(
+      child: ListView(
           children: [
             UserAccountsDrawerHeader(
               accountName: Text(Auth.userData.userName,
@@ -89,12 +88,11 @@ class NavBar extends StatelessWidget {
               title: const Text('Logout'),
               onTap: () {
                 parentKey.currentState!.openEndDrawer();
-                logout;
+                logout();
               },
             ),
           ],
         ),
-      ),
     );
   }
 }

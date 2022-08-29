@@ -20,6 +20,7 @@ const String customerQuery = r'''
       id
       code
       name
+      balance
     }
   }
 ''';

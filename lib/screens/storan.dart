@@ -124,7 +124,6 @@ class _PenyetoranState extends State<Penyetoran> {
               if (showDetail && !konfirmasi)
                 SizedBox(
                   height: 40,
-                  // width: 150,
                   child: ElevatedButton(
                       onPressed: () => setState(() => konfirmasi = true),
                       child: Wrap(
@@ -146,7 +145,8 @@ class _PenyetoranState extends State<Penyetoran> {
                           height: 40,
                           width: 100,
                           child: ElevatedButton(
-                              onPressed: () => setState(() => konfirmasi = false),
+                              onPressed: () =>
+                                  setState(() => konfirmasi = false),
                               style: const ButtonStyle(
                                   backgroundColor:
                                       MaterialStatePropertyAll(Colors.red)),
@@ -163,8 +163,6 @@ class _PenyetoranState extends State<Penyetoran> {
                           height: 40,
                           width: 100,
                           child: ElevatedButton(
-                              // onPressed: () => ScaffoldMessenger.of(context)
-                              //     .showSnackBar(const SnackBar(content: Text('Oke'))),
                               onPressed: konfirm,
                               child: Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
@@ -178,15 +176,15 @@ class _PenyetoranState extends State<Penyetoran> {
                   ],
                 ),
               if (hasuraLoading) const CircularProgressIndicator(),
-              if (showDetail && dataNasabah?.history != null)
-                ...[
-                  const SizedBox(height: 95),
-                  const Center(child: Text('History', style: TextStyle(fontWeight: FontWeight.w800))),
-                  const SizedBox(height: 40),
-                  history(dataNasabah!.history!)
-                  ]
-            ]
-            ),
+              if (showDetail && dataNasabah?.history != null) ...[
+                const SizedBox(height: 95),
+                const Center(
+                    child: Text('History',
+                        style: TextStyle(fontWeight: FontWeight.w800))),
+                const SizedBox(height: 40),
+                history(dataNasabah!.history!)
+              ]
+            ]),
             const SizedBox(height: 100)
           ],
         ),
@@ -263,10 +261,11 @@ class _PenyetoranState extends State<Penyetoran> {
         desc.text = '';
         jml.text = '';
         tujuan.text = '';
+        noRek.text = '';
       }
+
       konfirmasi = false;
     } catch (e) {
-      // print(e);
       showSnackBar('Terjadi Kesalahan');
     }
 

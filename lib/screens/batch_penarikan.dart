@@ -85,7 +85,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
         body: SingleChildScrollView(
           child: Column(children: [
             Wrap(
-              spacing: 10,
+              spacing: 5,
               runSpacing: 5,
               children: [
                 SizedBox(

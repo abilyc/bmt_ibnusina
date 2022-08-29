@@ -27,7 +27,7 @@ class TextFieldCust extends StatelessWidget {
       this.align = TextAlign.left,
       this.icon,
       this.keyboardType,
-      this.height = 30,
+      this.height = 34,
       this.width,
       this.controller,
       this.enabled = true,

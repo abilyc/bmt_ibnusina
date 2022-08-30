@@ -47,7 +47,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
     setState(() => loading = true);
     final List<Map<String, dynamic>> data = [];
     for (int i = 0; i < idController.length; i++) {
-      if(codeController[i].text.isNotEmpty){
+      if (codeController[i].text.isNotEmpty) {
         data.add({
           'customerId': idController[i].text,
           'amount': int.parse(amountController[i].text)
@@ -91,9 +91,10 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = Platform.isAndroid ? 85 : 150;
     final halfWidth = !Platform.isAndroid
         ? (MediaQuery.of(context).size.width - 50) / 2
-        : double.infinity;
+        : 150.0;
 
     return Wrapper(
         screen: 'BATCH PENARIKAN',
@@ -119,17 +120,17 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                       const SizedBox(width: 40, child: Text('Date')),
                       Expanded(
                           child: TextFieldCust(
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2101)
-                              );
-                              if(pickedDate != null){
-                                refDateDesc[1].text = DateFormat('dd-MM-yyyy').format(pickedDate);
-                              }
-                            } ,
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101));
+                          if (pickedDate != null) {
+                            refDateDesc[1].text =
+                                DateFormat('dd-MM-yyyy').format(pickedDate);
+                          }
+                        },
                         controller: refDateDesc[1],
                         keyboardType: TextInputType.datetime,
                         inputFormatter: [
@@ -274,13 +275,14 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                             children: [
                               SizedBox(
                                 height: 34,
-                                width: 150,
+                                width: width,
                                 child: RawAutocomplete<Customer>(
                                   focusNode: node[i],
                                   textEditingController: codeController[i],
                                   onSelected: (e) {
                                     idController[i].text = e.id;
-                                    balanceController[i].text = CurrencyTextInputFormatter(
+                                    balanceController[i].text =
+                                        CurrencyTextInputFormatter(
                                       locale: 'id',
                                       decimalDigits: 0,
                                       symbol: '',
@@ -301,10 +303,13 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                           focusNode,
                                           onFieldSubmitted) =>
                                       TextField(
+                                        style: const TextStyle(fontSize: 12),
                                     controller: textEditingController,
                                     focusNode: focusNode,
                                     decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 10),
                                       isDense: true,
                                       isCollapsed: true,
                                       fillColor:
@@ -328,12 +333,13 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                       Align(
                                     alignment: Alignment.topLeft,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(top: 2.0),
+                                      padding: const EdgeInsets.only(top: 1.0),
                                       child: Container(
                                         width: halfWidth,
                                         color: Colors.amber,
                                         child: Material(
                                           child: ListView(
+                                            padding: const EdgeInsets.symmetric(vertical: 2),
                                             shrinkWrap: true,
                                             children: options
                                                 .map((e) => Listener(
@@ -349,8 +355,13 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                   ),
                                 ),
                               ),
-                              TextFieldCust(width: 150, controller: balanceController[i], readOnly: true),
-                              TextFieldCust(width: 150, controller: amountController[i], 
+                              TextFieldCust(
+                                  width: width,
+                                  controller: balanceController[i],
+                                  readOnly: true),
+                              TextFieldCust(
+                                width: width,
+                                controller: amountController[i],
                                 inputFormatter: [
                                   FilteringTextInputFormatter.digitsOnly,
                                   CurrencyTextInputFormatter(
@@ -362,7 +373,10 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                               ),
                             ],
                           ),
-                          Visibility(visible: false, child: TextField(controller: idController[i])),
+                          Visibility(
+                              visible: false,
+                              child: TextField(controller: idController[i])),
+                          const SizedBox(height: 10)
                         ],
                         const SizedBox(width: double.infinity, height: 20)
                       ],

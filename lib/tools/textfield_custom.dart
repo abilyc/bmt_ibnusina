@@ -45,6 +45,7 @@ class TextFieldCust extends StatelessWidget {
       height: height,
       child: TextField(
           onTap: onTap,
+          style: const TextStyle(fontSize: 12),
           readOnly: readOnly,
           onChanged: onChanged,
           obscureText: obscure,

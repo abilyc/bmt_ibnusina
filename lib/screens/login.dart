@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SizedBox(
                 width: 300,
                 child: TextField(
+                  focusNode: FocusNode(),
                   controller: nameController,
                   style: TextStyle(color: Theme.of(context).primaryColorDark),
                   decoration: InputDecoration(
@@ -77,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SizedBox(
                 width: 300,
                 child: TextField(
+                  focusNode: FocusNode(),
                   controller: passwordController,
                   obscureText: true,
                   style: TextStyle(color: Theme.of(context).primaryColorDark),

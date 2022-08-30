@@ -7,8 +7,10 @@ import 'package:bmt_ibnusina/models/customers_model.dart';
 import 'package:bmt_ibnusina/tools/my_formatter.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class BatchPenarikan extends StatefulWidget {
@@ -30,6 +32,9 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
   final List<TextEditingController> amountController = [
     TextEditingController()
   ];
+  final List<TextEditingController> balanceController = [
+    TextEditingController()
+  ];
   final List<TextEditingController> idController = [TextEditingController()];
 
   final List<TextEditingController> refDateDesc = [
@@ -39,23 +44,33 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
   ];
 
   void mutate() async {
-    setState(()=>loading=true);
+    setState(() => loading = true);
     final List<Map<String, dynamic>> data = [];
     for (int i = 0; i < idController.length; i++) {
-      data.add({'customerId': idController[i].text, 'amount': int.parse(amountController[i].text)});
+      if(codeController[i].text.isNotEmpty){
+        data.add({
+          'customerId': idController[i].text,
+          'amount': int.parse(amountController[i].text)
+        });
+      }
     }
 
     final message = ScaffoldMessenger.of(context);
 
-    try{
-      await Hasura.mutate(batchPenarikanMutation, v: {'date': DateFormat('yyyy-MM-dd').parse(refDateDesc[1].text).toString(), 'description': refDateDesc[2].text, 'reference': refDateDesc[0].text, 'input': data});
+    try {
+      await Hasura.mutate(batchPenarikanMutation, v: {
+        'date': DateFormat('yyyy-MM-dd').parse(refDateDesc[1].text).toString(),
+        'description': refDateDesc[2].text,
+        'reference': refDateDesc[0].text,
+        'input': data
+      });
       message.showSnackBar(const SnackBar(content: Text('Berhasil')));
-    }catch(e){
+    } catch (e) {
       message.showSnackBar(const SnackBar(content: Text('Gagal')));
     }
-    setState((){
-      loading=false;
-      konfirmasi=false;
+    setState(() {
+      loading = false;
+      konfirmasi = false;
     });
   }
 
@@ -85,7 +100,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
         body: SingleChildScrollView(
           child: Column(children: [
             Wrap(
-              spacing: 5,
+              spacing: 10,
               runSpacing: 5,
               children: [
                 SizedBox(
@@ -103,14 +118,13 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                     children: [
                       const SizedBox(width: 40, child: Text('Date')),
                       Expanded(
-                        child: TextFieldCust(
-                            controller: refDateDesc[1],
-                            keyboardType: TextInputType.datetime,
-                            inputFormatter: [
-                              MyFormatter(sample: 'xx-xx-xxxx', sparator: '-')
-                            ],
-                        )
-                      )
+                          child: TextFieldCust(
+                        controller: refDateDesc[1],
+                        keyboardType: TextInputType.datetime,
+                        inputFormatter: [
+                          MyFormatter(sample: 'xx-xx-xxxx', sparator: '-')
+                        ],
+                      ))
                     ],
                   ),
                 ),
@@ -125,95 +139,224 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                 ),
                 const SizedBox(height: 10, width: double.infinity),
                 if (!isLoading)
-                  for (int i = 0; i <= counter; i++) 
-                  ...[
-                    SizedBox(
-                      width: halfWidth,
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 40, child: Text('Code')),
-                          Expanded(
-                            child: RawAutocomplete<Customer>(
-                              focusNode: node[i],
-                              textEditingController: codeController[i],
-                              onSelected: (e) => idController[i].text = e.id,
-                              optionsBuilder: (TextEditingValue v) =>
-                                  v.text.isEmpty
+                  Container(
+                    padding:
+                        const EdgeInsets.only(top: 30, left: 20, right: 20),
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // for (int i = 0; i <= counter; i++)
+                        // ...[
+                        //   SizedBox(
+                        //     width: halfWidth - 40,
+                        //     child: Row(
+                        //       children: [
+                        //         const SizedBox(width: 40, child: Text('Code')),
+                        //         Expanded(
+                        //           child: RawAutocomplete<Customer>(
+                        //             focusNode: node[i],
+                        //             textEditingController: codeController[i],
+                        //             onSelected: (e) => idController[i].text = e.id,
+                        //             optionsBuilder: (TextEditingValue v) =>
+                        //                 v.text.isEmpty
+                        //                     ? []
+                        //                     : customers
+                        //                         .where((e) => e.name
+                        //                             .toLowerCase()
+                        //                             .startsWith(v.text.toLowerCase()))
+                        //                         .toList(),
+                        //             displayStringForOption: (option) => option.name,
+                        //             fieldViewBuilder: (context, textEditingController,
+                        //                     focusNode, onFieldSubmitted) =>
+                        //                 TextField(
+                        //               controller: textEditingController,
+                        //               focusNode: focusNode,
+                        //               decoration: InputDecoration(
+                        //                 isDense: true,
+                        //                 isCollapsed: true,
+                        //                 contentPadding: const EdgeInsets.symmetric(
+                        //                     vertical: 8, horizontal: 10),
+                        //                 fillColor: Theme.of(context).primaryColorLight,
+                        //                 filled: true,
+                        //                 enabledBorder: const OutlineInputBorder(
+                        //                     borderSide: BorderSide(
+                        //                   color: Colors.transparent,
+                        //                 )),
+                        //                 focusedBorder: const OutlineInputBorder(
+                        //                   borderSide: BorderSide(
+                        //                     color: Colors.transparent,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             optionsViewBuilder: (BuildContext context,
+                        //                     AutocompleteOnSelected<Customer> onSelected,
+                        //                     Iterable<Customer> options) =>
+                        //                 Align(
+                        //               alignment: Alignment.topLeft,
+                        //               child: Padding(
+                        //                 padding: const EdgeInsets.only(top: 2.0),
+                        //                 child: Container(
+                        //                   width: halfWidth,
+                        //                   color: Colors.amber,
+                        //                   child: Material(
+                        //                     child: ListView(
+                        //                       shrinkWrap: true,
+                        //                       children: options
+                        //                           .map((e) => Listener(
+                        //                               onPointerDown: (_) =>
+                        //                                   onSelected(e),
+                        //                               child: ListTile(
+                        //                                   title: Text(e.name))))
+                        //                           .toList(),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        //   SizedBox(
+                        //     width: halfWidth,
+                        //     child: Row(
+                        //       children: [
+                        //         const SizedBox(width: 40, child: Text('Jml')),
+                        //         Expanded(
+                        //             child: TextFieldCust(
+                        //               inputFormatter: [
+                        //                 FilteringTextInputFormatter.digitsOnly,
+                        //                 CurrencyTextInputFormatter(
+                        //                   locale: 'id',
+                        //                   decimalDigits: 0,
+                        //                   symbol: 'Rp. '
+                        //                 ),
+                        //               ],
+                        //                 controller: amountController[i],
+                        //                 keyboardType: TextInputType.number)),
+                        //         SizedBox.shrink(child: TextField(controller: idController[i]))
+                        //       ],
+                        //     ),
+                        //   ),
+                        //   const SizedBox(height: 8)
+                        // ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Text('Code'),
+                            Text('Balance'),
+                            Text('Jml'),
+                          ],
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        for (int i = 0; i <= counter; i++) ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 34,
+                                width: 150,
+                                child: RawAutocomplete<Customer>(
+                                  focusNode: node[i],
+                                  textEditingController: codeController[i],
+                                  onSelected: (e) {
+                                    idController[i].text = e.id;
+                                    balanceController[i].text = CurrencyTextInputFormatter(
+                                      locale: 'id',
+                                      decimalDigits: 0,
+                                      symbol: '',
+                                    ).format(e.balance.toString());
+                                  },
+                                  optionsBuilder: (TextEditingValue v) => v
+                                          .text.isEmpty
                                       ? []
                                       : customers
                                           .where((e) => e.name
                                               .toLowerCase()
                                               .startsWith(v.text.toLowerCase()))
                                           .toList(),
-                              displayStringForOption: (option) => option.name,
-                              fieldViewBuilder: (context, textEditingController,
-                                      focusNode, onFieldSubmitted) =>
-                                  TextField(
-                                controller: textEditingController,
-                                focusNode: focusNode,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  isCollapsed: true,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 10),
-                                  fillColor: Theme.of(context).primaryColorLight,
-                                  filled: true,
-                                  enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  )),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
+                                  displayStringForOption: (option) =>
+                                      option.name,
+                                  fieldViewBuilder: (context,
+                                          textEditingController,
+                                          focusNode,
+                                          onFieldSubmitted) =>
+                                      TextField(
+                                    controller: textEditingController,
+                                    focusNode: focusNode,
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                                      isDense: true,
+                                      isCollapsed: true,
+                                      fillColor:
+                                          Theme.of(context).primaryColorLight,
+                                      filled: true,
+                                      enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      )),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              optionsViewBuilder: (BuildContext context,
-                                      AutocompleteOnSelected<Customer> onSelected,
-                                      Iterable<Customer> options) =>
-                                  Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 2.0),
-                                  child: Container(
-                                    width: halfWidth,
-                                    color: Colors.amber,
-                                    child: Material(
-                                      child: ListView(
-                                        shrinkWrap: true,
-                                        children: options
-                                            .map((e) => Listener(
-                                                onPointerDown: (_) =>
-                                                    onSelected(e),
-                                                child: ListTile(
-                                                    title: Text(e.name))))
-                                            .toList(),
+                                  optionsViewBuilder: (BuildContext context,
+                                          AutocompleteOnSelected<Customer>
+                                              onSelected,
+                                          Iterable<Customer> options) =>
+                                      Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2.0),
+                                      child: Container(
+                                        width: halfWidth,
+                                        color: Colors.amber,
+                                        child: Material(
+                                          child: ListView(
+                                            shrinkWrap: true,
+                                            children: options
+                                                .map((e) => Listener(
+                                                    onPointerDown: (_) =>
+                                                        onSelected(e),
+                                                    child: ListTile(
+                                                        title: Text(e.name))))
+                                                .toList(),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
+                              TextFieldCust(width: 150, controller: balanceController[i], readOnly: true),
+                              TextFieldCust(width: 150, controller: amountController[i], 
+                                inputFormatter: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  CurrencyTextInputFormatter(
+                                    locale: 'id',
+                                    decimalDigits: 0,
+                                    symbol: '',
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Visibility(visible: false, child: TextField(controller: idController[i])),
                         ],
-                      ),
+                        const SizedBox(width: double.infinity, height: 20)
+                      ],
                     ),
-                    SizedBox(
-                      width: halfWidth,
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 40, child: Text('Jml')),
-                          Expanded(
-                              child: TextFieldCust(
-                                  controller: amountController[i],
-                                  keyboardType: TextInputType.number)),
-                          SizedBox.shrink(child: TextField(controller: idController[i]))
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8)
-                  ]
+                  ),
               ],
             ),
             const SizedBox(height: 10),
@@ -226,6 +369,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                         counter++;
                         codeController.add(TextEditingController());
                         node.add(FocusNode());
+                        balanceController.add(TextEditingController());
                         amountController.add(TextEditingController());
                         idController.add(TextEditingController());
                         setState(() {});
@@ -249,7 +393,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                       ],
                     )),
               ),
-            if(konfirmasi && !loading)
+            if (konfirmasi && !loading)
               Column(
                 children: [
                   const Text('Apakah anda yakin?'),
@@ -288,7 +432,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                   ]),
                 ],
               ),
-            if(loading) const CircularProgressIndicator(),
+            if (loading) const CircularProgressIndicator(),
             const SizedBox(height: 20),
           ]),
         ));

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 class TextFieldCust extends StatelessWidget {
   final String? label;
   final TextAlign align;
+  final bool readOnly;
   final Function(String)? onChanged;
   final String? hint;
   final bool obscure;
@@ -18,6 +19,7 @@ class TextFieldCust extends StatelessWidget {
   final FocusNode? focusNode;
   const TextFieldCust(
       {Key? key,
+      this.readOnly = false,
       this.inputFormatter,
       this.onChanged,
       this.hint,
@@ -40,6 +42,7 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
+          readOnly: readOnly,
           onChanged: onChanged,
           obscureText: obscure,
           textAlign: align,
@@ -47,7 +50,6 @@ class TextFieldCust extends StatelessWidget {
           inputFormatters: inputFormatter,
           keyboardType: keyboardType ?? TextInputType.text,
           controller: controller,
-          style: TextStyle(color: Theme.of(context).primaryColorDark),
           decoration: InputDecoration(
             hintStyle: const TextStyle(fontSize: 13, color: Colors.deepOrange),
             hintText: hint ?? '',

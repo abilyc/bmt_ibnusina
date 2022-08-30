@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 class TextFieldCust extends StatelessWidget {
   final String? label;
   final TextAlign align;
+  final Function()? onTap;
   final bool readOnly;
   final Function(String)? onChanged;
   final String? hint;
@@ -19,6 +20,7 @@ class TextFieldCust extends StatelessWidget {
   final FocusNode? focusNode;
   const TextFieldCust(
       {Key? key,
+      this.onTap,
       this.readOnly = false,
       this.inputFormatter,
       this.onChanged,
@@ -42,6 +44,7 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
+          onTap: onTap,
           readOnly: readOnly,
           onChanged: onChanged,
           obscureText: obscure,

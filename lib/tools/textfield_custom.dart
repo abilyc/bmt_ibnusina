@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,8 +46,9 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
+          focusNode: FocusNode(),
           onTap: onTap,
-          style: const TextStyle(fontSize: 12),
+          style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
           readOnly: readOnly,
           onChanged: onChanged,
           obscureText: obscure,

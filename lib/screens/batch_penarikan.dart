@@ -50,7 +50,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
       if (codeController[i].text.isNotEmpty) {
         data.add({
           'customerId': idController[i].text,
-          'amount': int.parse(amountController[i].text)
+          'amount': int.parse(amountController[i].text.replaceAll('.', ''))
         });
       }
     }
@@ -303,7 +303,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                           focusNode,
                                           onFieldSubmitted) =>
                                       TextField(
-                                        style: const TextStyle(fontSize: 12),
+                                        style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
                                     controller: textEditingController,
                                     focusNode: focusNode,
                                     decoration: InputDecoration(
@@ -375,7 +375,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                           ),
                           Visibility(
                               visible: false,
-                              child: TextField(controller: idController[i])),
+                              child: TextField(controller: idController[i], focusNode: FocusNode())),
                           const SizedBox(height: 10)
                         ],
                         const SizedBox(width: double.infinity, height: 20)

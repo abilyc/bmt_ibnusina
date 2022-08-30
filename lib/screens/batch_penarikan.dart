@@ -119,6 +119,17 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                       const SizedBox(width: 40, child: Text('Date')),
                       Expanded(
                           child: TextFieldCust(
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101)
+                              );
+                              if(pickedDate != null){
+                                refDateDesc[1].text = DateFormat('dd-MM-yyyy').format(pickedDate);
+                              }
+                            } ,
                         controller: refDateDesc[1],
                         keyboardType: TextInputType.datetime,
                         inputFormatter: [

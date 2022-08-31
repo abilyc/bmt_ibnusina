@@ -159,103 +159,6 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // for (int i = 0; i <= counter; i++)
-                        // ...[
-                        //   SizedBox(
-                        //     width: halfWidth - 40,
-                        //     child: Row(
-                        //       children: [
-                        //         const SizedBox(width: 40, child: Text('Code')),
-                        //         Expanded(
-                        //           child: RawAutocomplete<Customer>(
-                        //             focusNode: node[i],
-                        //             textEditingController: codeController[i],
-                        //             onSelected: (e) => idController[i].text = e.id,
-                        //             optionsBuilder: (TextEditingValue v) =>
-                        //                 v.text.isEmpty
-                        //                     ? []
-                        //                     : customers
-                        //                         .where((e) => e.name
-                        //                             .toLowerCase()
-                        //                             .startsWith(v.text.toLowerCase()))
-                        //                         .toList(),
-                        //             displayStringForOption: (option) => option.name,
-                        //             fieldViewBuilder: (context, textEditingController,
-                        //                     focusNode, onFieldSubmitted) =>
-                        //                 TextField(
-                        //               controller: textEditingController,
-                        //               focusNode: focusNode,
-                        //               decoration: InputDecoration(
-                        //                 isDense: true,
-                        //                 isCollapsed: true,
-                        //                 contentPadding: const EdgeInsets.symmetric(
-                        //                     vertical: 8, horizontal: 10),
-                        //                 fillColor: Theme.of(context).primaryColorLight,
-                        //                 filled: true,
-                        //                 enabledBorder: const OutlineInputBorder(
-                        //                     borderSide: BorderSide(
-                        //                   color: Colors.transparent,
-                        //                 )),
-                        //                 focusedBorder: const OutlineInputBorder(
-                        //                   borderSide: BorderSide(
-                        //                     color: Colors.transparent,
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             optionsViewBuilder: (BuildContext context,
-                        //                     AutocompleteOnSelected<Customer> onSelected,
-                        //                     Iterable<Customer> options) =>
-                        //                 Align(
-                        //               alignment: Alignment.topLeft,
-                        //               child: Padding(
-                        //                 padding: const EdgeInsets.only(top: 2.0),
-                        //                 child: Container(
-                        //                   width: halfWidth,
-                        //                   color: Colors.amber,
-                        //                   child: Material(
-                        //                     child: ListView(
-                        //                       shrinkWrap: true,
-                        //                       children: options
-                        //                           .map((e) => Listener(
-                        //                               onPointerDown: (_) =>
-                        //                                   onSelected(e),
-                        //                               child: ListTile(
-                        //                                   title: Text(e.name))))
-                        //                           .toList(),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
-                        //   SizedBox(
-                        //     width: halfWidth,
-                        //     child: Row(
-                        //       children: [
-                        //         const SizedBox(width: 40, child: Text('Jml')),
-                        //         Expanded(
-                        //             child: TextFieldCust(
-                        //               inputFormatter: [
-                        //                 FilteringTextInputFormatter.digitsOnly,
-                        //                 CurrencyTextInputFormatter(
-                        //                   locale: 'id',
-                        //                   decimalDigits: 0,
-                        //                   symbol: 'Rp. '
-                        //                 ),
-                        //               ],
-                        //                 controller: amountController[i],
-                        //                 keyboardType: TextInputType.number)),
-                        //         SizedBox.shrink(child: TextField(controller: idController[i]))
-                        //       ],
-                        //     ),
-                        //   ),
-                        //   const SizedBox(height: 8)
-                        // ],
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -370,6 +273,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                     symbol: '',
                                   )
                                 ],
+                                keyboardType: TextInputType.number
                               ),
                             ],
                           ),

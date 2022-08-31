@@ -97,6 +97,7 @@ class _PenyetoranState extends State<Penyetoran> {
                                           focusNode,
                                           onFieldSubmitted) =>
                                       TextField(
+                                        enabled: !isLoading,
                                         style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
                                     controller: textEditingController,
                                     focusNode: focusNode,
@@ -198,7 +199,10 @@ class _PenyetoranState extends State<Penyetoran> {
             child: Text('Jumlah'),
           ),
           Expanded(
-            child: TextFieldCust(enabled: !konfirmasi, controller: jml, inputFormatter: [
+            child: TextFieldCust(
+              keyboardType: TextInputType.number,
+              enabled: !konfirmasi,
+              controller: jml, inputFormatter: [
               FilteringTextInputFormatter.digitsOnly,
               CurrencyTextInputFormatter(
                 locale: 'id',

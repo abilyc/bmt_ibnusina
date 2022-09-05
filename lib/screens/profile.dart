@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:bmt_ibnusina/auth/hasura.dart';
-import 'package:bmt_ibnusina/auth/services.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
+import 'package:bmt_ibnusina/provider/auth_provider.dart';
 import 'package:bmt_ibnusina/tools/bloc.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
+import 'package:provider/provider.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class MyProfile extends StatelessWidget {
     void simpan() async {
       final String uName = namaController.text.isNotEmpty
           ? namaController.text
-          : Auth.userData.userName;
+          : context.read<Auth>().user!.userName;
       final message = ScaffoldMessenger.of(context);
       bloc.setLoading(true);
       try {
@@ -49,7 +50,7 @@ class MyProfile extends StatelessWidget {
                     controller: namaController,
                     align: TextAlign.center,
                     hint: mode == 'profile'
-                        ? 'Ganti nama ${Auth.userData.userName}'
+                        ? 'Ganti nama ${context.read<Auth>().user!.userName}'
                         : 'Masukan nama')),
             const SizedBox(height: 5),
             SizedBox(

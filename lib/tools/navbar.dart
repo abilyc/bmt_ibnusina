@@ -1,5 +1,6 @@
 import 'package:bmt_ibnusina/auth/hasura.dart';
-import 'package:bmt_ibnusina/auth/services.dart';
+import 'package:bmt_ibnusina/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,7 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     void logout() {
       Hasura.headers = null;
-      Auth.userData.dispose();
-      Navigator.pushNamedAndRemoveUntil(
-          context, 'login', ModalRoute.withName('home'));
+      Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('home'));
     }
 
     return Drawer(
@@ -23,12 +22,11 @@ class NavBar extends StatelessWidget {
       child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(Auth.userData.userName,
+              accountName: Text(context.read<Auth>().user!.userName,
                   style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
               accountEmail: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Text(Auth.userData.userRole)),
+                  Expanded(child: Text(context.read<Auth>().user!.userRole)),
                   GestureDetector(
                     child: const Icon(CupertinoIcons.gear_solid,
                         size: 23, color: Colors.white),
@@ -46,7 +44,7 @@ class NavBar extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
-            if (Auth.userData.userRole == 'manager')
+            if (context.read<Auth>().user!.userRole == 'manager')
               ListTile(
                 leading: const Icon(CupertinoIcons.person_crop_circle_badge_plus),
                 title: const Text('Tambah User'),
@@ -70,8 +68,7 @@ class NavBar extends StatelessWidget {
               title: const Text('Penarikan'),
               onTap: () {
                 parentKey.currentState!.openEndDrawer();
-                Navigator.pushNamedAndRemoveUntil(
-                    context, 'penarikan', ModalRoute.withName('home'));
+                Navigator.pushNamedAndRemoveUntil(context, 'penarikan', ModalRoute.withName('home'));
               },
             ),
             ListTile(

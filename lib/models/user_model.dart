@@ -1,10 +1,10 @@
 class User {
-  dynamic userName;
-  dynamic userId;
-  dynamic userRole;
-  dynamic token;
+  final String userName;
+  final String userId;
+  final String userRole;
+  final String token;
 
-  User({this.userName, this.userId, this.userRole, this.token});
+  User({required this.userName, required this.userId, required this.userRole, required this.token});
 
   User.fromJson(Map<String, dynamic> json)
       : userName = json['data']['login']['username'],
@@ -18,11 +18,4 @@ class User {
         'userRole': userRole,
         'token': token
       };
-
-  void dispose() {
-    userName = null;
-    userId = null;
-    userRole = null;
-    token = null;
-  }
 }

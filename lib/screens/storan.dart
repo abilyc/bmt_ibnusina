@@ -71,84 +71,78 @@ class _PenyetoranState extends State<Penyetoran> {
             width: 60,
             child: Text('No. Rek'),
           ),
-          // Expanded(
-          //   child: TextFieldCust(
-          //       icon: Icons.search,
-          //       controller: noRek,
-          //       onPressed: enabled ? searchData : null),
-          // ),
           Expanded(
             child: RawAutocomplete<Customer>(
-                                  focusNode: FocusNode(),
-                                  textEditingController: noRek,
-                                  onSelected: (e) => searchData(),
-                                  optionsBuilder: (TextEditingValue v) => v
-                                          .text.isEmpty
-                                      ? []
-                                      : customers
-                                          .where((e) => e.name
-                                              .toLowerCase()
-                                              .startsWith(v.text.toLowerCase()))
-                                          .toList(),
-                                  displayStringForOption: (option) =>
-                                      option.name,
-                                  fieldViewBuilder: (context,
-                                          textEditingController,
-                                          focusNode,
-                                          onFieldSubmitted) =>
-                                      TextField(
-                                        enabled: !isLoading,
-                                        style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
-                                    controller: textEditingController,
-                                    focusNode: focusNode,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 10),
-                                      isDense: true,
-                                      isCollapsed: true,
-                                      fillColor:
-                                          Theme.of(context).primaryColorLight,
-                                      filled: true,
-                                      enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      )),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  optionsViewBuilder: (BuildContext context,
-                                          AutocompleteOnSelected<Customer>
-                                              onSelected,
-                                          Iterable<Customer> options) =>
-                                      Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 1.0),
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width - 120,
-                                        color: Colors.amber,
-                                        child: Material(
-                                          child: ListView(
-                                            padding: const EdgeInsets.symmetric(vertical: 2),
-                                            shrinkWrap: true,
-                                            children: options
-                                                .map((e) => Listener(
-                                                    onPointerDown: (_) =>
-                                                        onSelected(e),
-                                                    child: ListTile(
-                                                        title: Text(e.name))))
-                                                .toList(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+              focusNode: FocusNode(),
+              textEditingController: noRek,
+              onSelected: (e) => searchData(),
+              optionsBuilder: (TextEditingValue v) => v
+                      .text.isEmpty
+                  ? []
+                  : customers
+                      .where((e) => e.name
+                          .toLowerCase()
+                          .startsWith(v.text.toLowerCase()))
+                      .toList(),
+              displayStringForOption: (option) =>
+                  option.name,
+              fieldViewBuilder: (context,
+                      textEditingController,
+                      focusNode,
+                      onFieldSubmitted) =>
+                  TextField(
+                    enabled: !isLoading,
+                    style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
+                controller: textEditingController,
+                focusNode: focusNode,
+                decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 10),
+                  isDense: true,
+                  isCollapsed: true,
+                  fillColor:
+                      Theme.of(context).primaryColorLight,
+                  filled: true,
+                  enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.transparent,
+                  )),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ),
+              ),
+              optionsViewBuilder: (BuildContext context,
+                      AutocompleteOnSelected<Customer>
+                          onSelected,
+                      Iterable<Customer> options) =>
+                  Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 1.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 120,
+                    color: Colors.amber,
+                    child: Material(
+                      child: ListView(
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        shrinkWrap: true,
+                        children: options
+                            .map((e) => Listener(
+                                onPointerDown: (_) =>
+                                    onSelected(e),
+                                child: ListTile(
+                                    title: Text(e.name))))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           )
         ],
       ),

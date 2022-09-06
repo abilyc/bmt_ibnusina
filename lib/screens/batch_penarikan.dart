@@ -197,11 +197,11 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                     optionsBuilder: (TextEditingValue v) => v
                                             .text.isEmpty
                                         ? []
-                                        : value.customers
+                                        : value.customers != null ? value.customers!
                                             .where((e) => e.name
                                                 .toLowerCase()
                                                 .startsWith(v.text.toLowerCase()))
-                                            .toList(),
+                                            .toList() : [],
                                     displayStringForOption: (option) =>
                                         option.name,
                                     fieldViewBuilder: (context,

@@ -8,11 +8,11 @@ class Hasura {
   static Map<String, String>? headers = {};
 
   static Future<dynamic> query(String doc, {Map<String, dynamic>? v}) async =>
-      _this._result =
+      // _this._result =
           await _this.hasuraConnect.query(doc, variables: v, headers: headers);
   static Future<dynamic> mutate(String doc, {Map<String, dynamic>? v}) async =>
-      _this._result = await _this.hasuraConnect
-          .mutation(doc, variables: v, headers: headers);
+      // _this._result = 
+      await _this.hasuraConnect.mutation(doc, variables: v, headers: headers);
 
   static get result => _this._result;
 

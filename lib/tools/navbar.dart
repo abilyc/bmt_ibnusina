@@ -1,4 +1,3 @@
-import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,10 +11,6 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void logout() {
-      Hasura.headers = null;
-      Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('home'));
-    }
 
     return Drawer(
       backgroundColor: Colors.cyan,
@@ -85,7 +80,7 @@ class NavBar extends StatelessWidget {
               title: const Text('Logout'),
               onTap: () {
                 parentKey.currentState!.openEndDrawer();
-                logout();
+                context.read<Auth>().logout(context);
               },
             ),
           ],

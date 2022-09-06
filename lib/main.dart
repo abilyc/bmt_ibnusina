@@ -5,7 +5,6 @@ import 'package:bmt_ibnusina/screens/profile.dart';
 import 'package:bmt_ibnusina/screens/storan.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:bmt_ibnusina/screens/login.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -60,7 +59,6 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.robotoTextTheme()),
       routes: {
         'home': (context) => const Home(),
-        'login': (context) => const LoginScreen(),
         'myProfile': (context) => const MyProfile(mode: 'profile'),
         'newUser': (context) => const MyProfile(mode: 'tambah user'),
         'batch_penarikan': (context) => const BatchPenarikan(),
@@ -68,7 +66,7 @@ class MyApp extends StatelessWidget {
         'penarikan': (context) => const Penyetoran(mode: 'penarikan'),
         'transfer': (context) => const Penyetoran(mode: 'transfer')
       },
-      initialRoute: 'login',
+      initialRoute: 'home',
     );
   }
 }

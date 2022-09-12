@@ -5,6 +5,7 @@ import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/customers_model.dart';
 import 'package:bmt_ibnusina/models/nasabah_model.dart';
+import 'package:bmt_ibnusina/provider/storan_provider.dart';
 import 'package:bmt_ibnusina/screens/history.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
@@ -12,6 +13,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class Penyetoran extends StatefulWidget {
   final String mode;
@@ -217,6 +219,7 @@ class _PenyetoranState extends State<Penyetoran> {
             Wrap(alignment: WrapAlignment.center, runSpacing: 5, children: [
               ...data,
               const SizedBox(height: 60),
+              Consumer<Storan>(builder: (_,v,__) => !v.isEnabled ? const CircularProgressIndicator() : const SizedBox()),
               if (!enabled) const CircularProgressIndicator(),
               if (showDetail) ...detail,
               const SizedBox(height: 60),
@@ -371,6 +374,5 @@ class _PenyetoranState extends State<Penyetoran> {
     setState(() => hasuraLoading = false);
   }
 
-  void showSnackBar(String msg) =>
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  void showSnackBar(String msg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 }

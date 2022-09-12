@@ -271,6 +271,13 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                 TextFieldCust(
                                     width: width,
                                     controller: amountController[i],
+                                    onChanged: (e) =>
+                                      balanceController[i].text = CurrencyTextInputFormatter(
+                                        locale: 'id',
+                                        decimalDigits: 0,
+                                        symbol: '',
+                                      ).format((e == '' ? customers.where((e) => e.name == codeController[i].text).first.balance : int.parse(balanceController[i].text.replaceAll('.', '')) - int.parse(e.replaceAll('.', ''))).toString())
+                                    ,
                                     inputFormatter: [
                                       FilteringTextInputFormatter.digitsOnly,
                                       CurrencyTextInputFormatter(

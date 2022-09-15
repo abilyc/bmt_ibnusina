@@ -20,8 +20,10 @@ class TextFieldCust extends StatelessWidget {
   final TextEditingController? controller;
   final Function? onPressed;
   final FocusNode? focusNode;
+  final bool autofocus;
   const TextFieldCust(
       {Key? key,
+      this.autofocus = false,
       this.onTap,
       this.readOnly = false,
       this.inputFormatter,
@@ -46,7 +48,8 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
-          focusNode: FocusNode(),
+        autofocus: autofocus,
+          focusNode: focusNode,
           onTap: onTap,
           style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
           readOnly: readOnly,

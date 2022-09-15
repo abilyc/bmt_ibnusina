@@ -26,6 +26,7 @@ class Stor extends StatelessWidget {
     final TextEditingController date = TextEditingController();
     final TextEditingController tujuan = TextEditingController();
     final TextEditingController jml = TextEditingController();
+    final FocusNode jmlh = FocusNode();
     final customers = context.watch<Customers>().customers;
     context.read<Storan>().init(context, mode, [ref, desc, date, jml, tujuan]);
     context.read<Storan>().isShowDetail = context.read<Storan>().isShowDetail == true ? false : false;
@@ -210,6 +211,8 @@ class Stor extends StatelessWidget {
                           Expanded(
                             child: TextFieldCust(
                               keyboardType: TextInputType.number, 
+                              autofocus: true,
+                              focusNode: jmlh,
                               onChanged: (e) => v.checkValue(),
                               enabled: !v.isConfirm,
                               controller: jml, inputFormatter: [
@@ -227,7 +230,10 @@ class Stor extends StatelessWidget {
                       SizedBox(
                         height: 40,
                         child: ElevatedButton(
-                          onPressed: !v.konfimasiButton ? null : () => v.setConfirm = true,
+                          onPressed: !v.konfimasiButton ? null : () {
+                            if(jmlh.hasFocus) jmlh.unfocus();
+                            v.setConfirm = true;
+                          },
                           child: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
                             spacing: 5,

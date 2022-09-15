@@ -2,8 +2,11 @@ import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
 import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/nasabah_model.dart';
+import 'package:bmt_ibnusina/provider/customer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 
 class Storan with ChangeNotifier{
   Nasabah? dataNasabah;
@@ -51,11 +54,13 @@ class Storan with ChangeNotifier{
       messenger.showSnackBar(const SnackBar(content: Text('Terjadi Kesalahan')));
     }
     isLoading = false;
+    konfimasiButton = false;
     notifyListeners();
   }
 
   void konfirm() async {
     final snackbar = ScaffoldMessenger.of(ctx!);
+    final ctxRead = ctx!.read<Customers>();
     Map<String, dynamic> konfirmData = {
       'penyetoran': [
         setorMutation,
@@ -116,6 +121,13 @@ class Storan with ChangeNotifier{
 
     hasuraLoading = false;
     notifyListeners();
+
+    try{
+      dataNasabah = Nasabah.fromJson(await Hasura.query(trxQuery, v: {'code':ctxRead.customers!.where((e) => e.name == dataNasabah!.nama).first.code}));
+      notifyListeners();
+    }catch(e){
+      snackbar.showSnackBar(const SnackBar(content: Text('Tidak dapat mengambil data nasabah')));
+    }
   }
 
 

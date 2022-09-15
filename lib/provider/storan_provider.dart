@@ -120,6 +120,7 @@ class Storan with ChangeNotifier{
     }
 
     hasuraLoading = false;
+    konfimasiButton = false;
     notifyListeners();
 
     try{

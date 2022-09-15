@@ -198,12 +198,12 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                             .text.isEmpty
                                         ? []
                                         : value.customers != null ? value.customers!
-                                            .where((e) => e.name
+                                            .where((e) => e.code
                                                 .toLowerCase()
                                                 .startsWith(v.text.toLowerCase()))
                                             .toList() : [],
                                     displayStringForOption: (option) =>
-                                        option.name,
+                                        option.code,
                                     fieldViewBuilder: (context,
                                             textEditingController,
                                             focusNode,
@@ -255,7 +255,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                                       onPointerDown: (_) =>
                                                           onSelected(e),
                                                       child: ListTile(
-                                                          title: Text(e.name))))
+                                                          title: Text(e.code))))
                                                   .toList(),
                                             ),
                                           ),
@@ -276,7 +276,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                         locale: 'id',
                                         decimalDigits: 0,
                                         symbol: '',
-                                      ).format((e == '' ? customers.where((e) => e.name == codeController[i].text).first.balance : int.parse(balanceController[i].text.replaceAll('.', '')) - int.parse(e.replaceAll('.', ''))).toString())
+                                      ).format((e == '' ? customers.where((e) => e.code == codeController[i].text).first.balance : int.parse(balanceController[i].text.replaceAll('.', '')) - int.parse(e.replaceAll('.', ''))).toString())
                                     ,
                                     inputFormatter: [
                                       FilteringTextInputFormatter.digitsOnly,

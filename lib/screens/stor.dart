@@ -135,8 +135,8 @@ class Stor extends StatelessWidget {
                       Text(v.dataNasabah!.nama!,
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(width: double.infinity),
-                      Text(v.dataNasabah!.balance!.toString(),
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text("Rp. ${CurrencyTextInputFormatter(locale: 'id',decimalDigits: 0,symbol: '').format(v.dataNasabah!.balance!.toString())}",
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 30),
                       Row(
                         children: [

@@ -280,7 +280,7 @@ class Stor extends StatelessWidget {
                         ],
                       ),
                     if (v.hasuraLoading) const CircularProgressIndicator(),
-                    if (v.isShowDetail && v.dataNasabah?.history != null) ...[
+                    if (v.isShowDetail && v.dataNasabah!.history!.isNotEmpty) ...[
                       const SizedBox(height: 90),
                       const Center(
                           child: Text('History',

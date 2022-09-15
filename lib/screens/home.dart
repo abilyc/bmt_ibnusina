@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
-      builder: (context, value, child) => value.token != null ? Wrapper(back: false, body: Text("Welcome ${context.read<Auth>().user!.userName}"), screen: 'Home')
+      builder: (context, value, child) => value.user?.token != null ? Wrapper(back: false, body: Text("Welcome ${context.read<Auth>().user!.userName}"), screen: 'Home')
       : const LoginScreen() 
     );
   }

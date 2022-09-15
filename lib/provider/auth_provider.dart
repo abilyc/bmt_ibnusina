@@ -6,9 +6,7 @@ import 'package:bmt_ibnusina/provider/customer_provider.dart';
 import 'package:flutter/material.dart';
 
 class Auth with ChangeNotifier {
-  User? _user;
-  User? get user => _user;
-  String? get token => _user?.token;
+  User? user;
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -18,8 +16,8 @@ class Auth with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      _user = User.fromJson(await Hasura.mutate(loginMutation, v: {"username": username, "password": password}));
-      Hasura.headers = {'Authorization': 'Bearer $token'};
+      user = User.fromJson(await Hasura.mutate(loginMutation, v: {"username": username, "password": password}));
+      Hasura.headers = {'Authorization': 'Bearer ${user!.token}'};
       customer.fetchCustomer();
     } catch(e){
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Gagal')));
@@ -30,7 +28,7 @@ class Auth with ChangeNotifier {
 
   void logout(BuildContext context){
     Hasura.headers = null;
-    _user = null;
+    user = null;
     notifyListeners();
   }
 }

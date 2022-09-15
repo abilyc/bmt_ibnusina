@@ -29,7 +29,12 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScopeNode curFocus = FocusScope.of(context);
+        if(!curFocus.hasPrimaryFocus){
+          curFocus.focusedChild?.unfocus();
+        }
+      },
       child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(

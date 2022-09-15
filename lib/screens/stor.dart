@@ -43,7 +43,7 @@ class Stor extends StatelessWidget {
                   children: [
                     const SizedBox(
                       width: 60,
-                      child: Text('No. Rek'),
+                      child: Text('Code'),
                     ),
                     Expanded(
                       child: RawAutocomplete<Customer>(
@@ -54,12 +54,12 @@ class Stor extends StatelessWidget {
                                 .text.isEmpty
                             ? []
                             : customers!
-                                .where((e) => e.name
+                                .where((e) => e.code
                                     .toLowerCase()
                                     .startsWith(v.text.toLowerCase()))
                                 .toList(),
                         displayStringForOption: (option) =>
-                            option.name,
+                            option.code,
                         fieldViewBuilder: (context,
                                 textEditingController,
                                 focusNode,
@@ -109,7 +109,7 @@ class Stor extends StatelessWidget {
                                           onPointerDown: (_) =>
                                               onSelected(e),
                                           child: ListTile(
-                                              title: Text(e.name))))
+                                              title: Text(e.code))))
                                       .toList(),
                                 ),
                               ),
@@ -132,7 +132,10 @@ class Stor extends StatelessWidget {
                     runSpacing: 5,
                     children: [
                       const SizedBox(height: 20),
-                      Text(v.dataNasabah?.nama ?? '',
+                      Text(v.dataNasabah!.nama!,
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: double.infinity),
+                      Text(v.dataNasabah!.balance!.toString(),
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 30),
                       Row(

@@ -62,8 +62,8 @@ class Storan with ChangeNotifier{
         {
           'reference': controller![0].text,
           'description': controller![1].text,
-          'amount': int.parse(controller![2].text.replaceAll('.', '')),
-          'date': DateFormat('dd-MM-yyyy').parse(controller![3].text).toString(),
+          'date': DateFormat('dd-MM-yyyy').parse(controller![2].text).toString(),
+          'amount': int.parse(controller![3].text.replaceAll('.', '')),
           'cashIn': dataNasabah!.id
         }
       ],
@@ -72,8 +72,8 @@ class Storan with ChangeNotifier{
         {
           'reference': controller![0].text,
           'description': controller![1].text,
-          'amount': int.parse(controller![2].text.replaceAll('.', '')),
-          'date': DateFormat('dd-MM-yyyy').parse(controller![3].text).toString(),
+          'date': DateFormat('dd-MM-yyyy').parse(controller![2].text).toString(),
+          'amount': int.parse(controller![3].text.replaceAll('.', '')),
           'cashOut': dataNasabah!.id
         }
       ],
@@ -82,8 +82,8 @@ class Storan with ChangeNotifier{
         {
           'reference': controller![0].text,
           'description': controller![1].text,
-          'amount': int.parse(controller![2].text.replaceAll('.', '')),
-          'date': DateFormat('dd-MM-yyyy').parse(controller![3].text).toString(),
+          'date': DateFormat('dd-MM-yyyy').parse(controller![2].text).toString(),
+          'amount': int.parse(controller![3].text.replaceAll('.', '')),
           'capitalAccountFROM': dataNasabah!.id,
           'capitalAccountTO': controller![4].text
         }

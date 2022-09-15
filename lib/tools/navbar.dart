@@ -17,7 +17,7 @@ class NavBar extends StatelessWidget {
       child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(context.read<Auth>().user!.userName,
+              accountName: Text(context.read<Auth>().user?.userName ?? '',
                   style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
               accountEmail: Row(
                 children: [

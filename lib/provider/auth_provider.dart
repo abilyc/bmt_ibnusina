@@ -30,5 +30,6 @@ class Auth with ChangeNotifier {
     Hasura.headers = null;
     user = null;
     notifyListeners();
+    Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false);
   }
 }

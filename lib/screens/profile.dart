@@ -24,6 +24,7 @@ class MyProfile extends StatelessWidget {
         : MediaQuery.of(context).size.width / 2;
 
     void simpan() async {
+      FocusScope.of(context).focusedChild?.unfocus();
       final String uName = namaController.text.isNotEmpty
           ? namaController.text
           : context.read<Auth>().user!.userName;

@@ -25,8 +25,10 @@ class NavBar extends StatelessWidget {
                   GestureDetector(
                     child: const Icon(CupertinoIcons.gear_solid,
                         size: 23, color: Colors.white),
-                    onTap: () => Navigator.pushNamedAndRemoveUntil(
-                      context, 'myProfile', ModalRoute.withName('home')),
+                    onTap: () {
+                      parentKey.currentState!.openEndDrawer();
+                      Navigator.pushNamedAndRemoveUntil(context, 'myProfile', ModalRoute.withName('home'));
+                    }
                   ),
                   const SizedBox(width: 10)
                 ],

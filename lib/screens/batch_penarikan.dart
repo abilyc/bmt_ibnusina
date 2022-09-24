@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
-import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/customers_model.dart';
+import 'package:bmt_ibnusina/provider/customer_provider.dart';
 import 'package:bmt_ibnusina/tools/my_formatter.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class BatchPenarikan extends StatefulWidget {
   const BatchPenarikan({super.key});
@@ -36,6 +37,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
     TextEditingController()
   ];
   final List<TextEditingController> idController = [TextEditingController()];
+  final List<TextEditingController> nameController = [TextEditingController()];
 
   final List<TextEditingController> refDateDesc = [
     TextEditingController(),
@@ -74,23 +76,9 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
     });
   }
 
-  Future getCustomer() async {
-    setState(() => isLoading = true);
-    final data = await Hasura.query(customerQuery);
-    customers = (data['data']['customer'] as List)
-        .map((e) => Customer.fromJson(e))
-        .toList();
-    setState(() => isLoading = false);
-  }
-
-  @override
-  void initState() {
-    getCustomer();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.watch<Customers>().isLoading;
     final double width = Platform.isAndroid ? 85 : 150;
     final halfWidth = !Platform.isAndroid
         ? (MediaQuery.of(context).size.width - 50) / 2
@@ -124,8 +112,8 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101));
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2025));
                           if (pickedDate != null) {
                             refDateDesc[1].text =
                                 DateFormat('dd-MM-yyyy').format(pickedDate);
@@ -150,142 +138,164 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                   ),
                 ),
                 const SizedBox(height: 10, width: double.infinity),
-                if (!isLoading)
-                  Container(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 20, right: 20),
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Text('Code'),
-                            Text('Balance'),
-                            Text('Jml'),
-                          ],
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        for (int i = 0; i <= counter; i++) ...[
+                  Consumer<Customers>(
+                    builder: (context, value, child) {
+                    return value.isLoading ? const SizedBox() :
+                    Container(
+                      padding:
+                          const EdgeInsets.only(top: 30, left: 20, right: 20),
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 34,
-                                width: width,
-                                child: RawAutocomplete<Customer>(
-                                  focusNode: node[i],
-                                  textEditingController: codeController[i],
-                                  onSelected: (e) {
-                                    idController[i].text = e.id;
-                                    balanceController[i].text =
-                                        CurrencyTextInputFormatter(
-                                      locale: 'id',
-                                      decimalDigits: 0,
-                                      symbol: '',
-                                    ).format(e.balance.toString());
-                                  },
-                                  optionsBuilder: (TextEditingValue v) => v
-                                          .text.isEmpty
-                                      ? []
-                                      : customers
-                                          .where((e) => e.name
-                                              .toLowerCase()
-                                              .startsWith(v.text.toLowerCase()))
-                                          .toList(),
-                                  displayStringForOption: (option) =>
-                                      option.name,
-                                  fieldViewBuilder: (context,
-                                          textEditingController,
-                                          focusNode,
-                                          onFieldSubmitted) =>
-                                      TextField(
-                                        style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
-                                    controller: textEditingController,
-                                    focusNode: focusNode,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 10),
-                                      isDense: true,
-                                      isCollapsed: true,
-                                      fillColor:
-                                          Theme.of(context).primaryColorLight,
-                                      filled: true,
-                                      enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      )),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
+                              if(!konfirmasi) const Text('Code') else const Text('Name'),
+                              const Text('Balance'),
+                              const Text('Jml'),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          for (int i = 0; i <= counter; i++) ...[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                konfirmasi ? 
+                                SizedBox(
+                                  height: 34,
+                                  width: width,
+                                  child: TextFieldCust(
+                                    controller: nameController[i],
+                                  ),
+                                ):
+                                SizedBox(
+                                  height: 34,
+                                  width: width,
+                                  child: RawAutocomplete<Customer>(
+                                    focusNode: node[i],
+                                    textEditingController: codeController[i],
+                                    onSelected: (e) {
+                                      idController[i].text = e.id;
+                                      nameController[i].text = e.name;
+                                      balanceController[i].text =
+                                          CurrencyTextInputFormatter(
+                                        locale: 'id',
+                                        decimalDigits: 0,
+                                        symbol: '',
+                                      ).format(e.balance.toString());
+                                    },
+                                    optionsBuilder: (TextEditingValue v) => v
+                                            .text.isEmpty
+                                        ? []
+                                        : value.customers != null ? value.customers!
+                                            .where((e) => e.code
+                                                .toLowerCase()
+                                                .startsWith(v.text.toLowerCase()))
+                                            .toList() : [],
+                                    displayStringForOption: (option) =>
+                                        option.code,
+                                    fieldViewBuilder: (context,
+                                            textEditingController,
+                                            focusNode,
+                                            onFieldSubmitted) =>
+                                        TextField(
+                                      style: Platform.isAndroid
+                                          ? const TextStyle(fontSize: 12)
+                                          : null,
+                                      controller: textEditingController,
+                                      focusNode: focusNode,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 10),
+                                        isDense: true,
+                                        isCollapsed: true,
+                                        fillColor:
+                                            Theme.of(context).primaryColorLight,
+                                        filled: true,
+                                        enabledBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
                                           color: Colors.transparent,
+                                        )),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  optionsViewBuilder: (BuildContext context,
-                                          AutocompleteOnSelected<Customer>
-                                              onSelected,
-                                          Iterable<Customer> options) =>
-                                      Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 1.0),
-                                      child: Container(
-                                        width: halfWidth,
-                                        color: Colors.amber,
-                                        child: Material(
-                                          child: ListView(
-                                            padding: const EdgeInsets.symmetric(vertical: 2),
-                                            shrinkWrap: true,
-                                            children: options
-                                                .map((e) => Listener(
-                                                    onPointerDown: (_) =>
-                                                        onSelected(e),
-                                                    child: ListTile(
-                                                        title: Text(e.name))))
-                                                .toList(),
+                                    optionsViewBuilder: (BuildContext context,
+                                            AutocompleteOnSelected<Customer>
+                                                onSelected,
+                                            Iterable<Customer> options) =>
+                                        Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 1.0),
+                                        child: Container(
+                                          width: halfWidth,
+                                          color: Colors.amber,
+                                          child: Material(
+                                            child: ListView(
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 2),
+                                              shrinkWrap: true,
+                                              children: options
+                                                  .map((e) => Listener(
+                                                      onPointerDown: (_) =>
+                                                          onSelected(e),
+                                                      child: ListTile(
+                                                          title: Text(e.code))))
+                                                  .toList(),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              TextFieldCust(
-                                  width: width,
-                                  controller: balanceController[i],
-                                  readOnly: true),
-                              TextFieldCust(
-                                width: width,
-                                controller: amountController[i],
-                                inputFormatter: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  CurrencyTextInputFormatter(
-                                    locale: 'id',
-                                    decimalDigits: 0,
-                                    symbol: '',
-                                  )
-                                ],
-                                keyboardType: TextInputType.number
-                              ),
-                            ],
-                          ),
-                          Visibility(
-                              visible: false,
-                              child: TextField(controller: idController[i], focusNode: FocusNode())),
-                          const SizedBox(height: 10)
+                                TextFieldCust(
+                                    width: width,
+                                    controller: balanceController[i],
+                                    readOnly: true),
+                                TextFieldCust(
+                                    width: width,
+                                    controller: amountController[i],
+                                    onChanged: (e) =>
+                                      balanceController[i].text = CurrencyTextInputFormatter(
+                                        locale: 'id',
+                                        decimalDigits: 0,
+                                        symbol: '',
+                                      ).format((e == '' ? customers.where((e) => e.code == codeController[i].text).first.balance : int.parse(balanceController[i].text.replaceAll('.', '')) - int.parse(e.replaceAll('.', ''))).toString())
+                                    ,
+                                    inputFormatter: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      CurrencyTextInputFormatter(
+                                        locale: 'id',
+                                        decimalDigits: 0,
+                                        symbol: '',
+                                      )
+                                    ],
+                                    keyboardType: TextInputType.number),
+                              ],
+                            ),
+                            Visibility(
+                                visible: false,
+                                child: TextField(
+                                    controller: idController[i],
+                                    focusNode: FocusNode())),
+                            const SizedBox(height: 10)
+                          ],
+                          const SizedBox(width: double.infinity, height: 20)
                         ],
-                        const SizedBox(width: double.infinity, height: 20)
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  }),
+                  
               ],
             ),
             const SizedBox(height: 10),
@@ -300,6 +310,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                         node.add(FocusNode());
                         balanceController.add(TextEditingController());
                         amountController.add(TextEditingController());
+                        nameController.add(TextEditingController());
                         idController.add(TextEditingController());
                         setState(() {});
                       },
@@ -312,6 +323,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                 height: 40,
                 // width: 150,
                 child: ElevatedButton(
+                    focusNode: FocusNode(),
                     onPressed: () => setState(() => konfirmasi = true),
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -332,7 +344,8 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                         height: 40,
                         width: 100,
                         child: ElevatedButton(
-                            onPressed: () => setState(() => konfirmasi = false),
+                            onPressed: () =>
+                              setState(() => konfirmasi = false),
                             style: const ButtonStyle(
                                 backgroundColor:
                                     MaterialStatePropertyAll(Colors.red)),

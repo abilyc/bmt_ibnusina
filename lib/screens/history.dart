@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bmt_ibnusina/models/transaksi_model.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,11 @@ Widget history(List<Trx> data) {
         runSpacing: 10,
         children: [
           Center(child: Text(e.type!.toUpperCase(), style: TextStyle(fontSize: isAndroid ? 11 : 13))),
-          Center(child: Text('Rp. ${e.amount}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: isAndroid ? 13 : 15))),
+          Center(child: Text('Rp. ${CurrencyTextInputFormatter(
+                                locale: 'id',
+                                decimalDigits: 0,
+                                symbol: ''
+                              ).format(e.amount.toString())}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: isAndroid ? 13 : 15))),
           Center(child: Text(DateFormat('dd-MM-yyyy').format(DateTime.parse(e.date!)).toString(), style: TextStyle(fontSize: isAndroid ? 10 : 12)))
         ],
       ))

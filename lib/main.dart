@@ -1,13 +1,14 @@
+import 'package:bmt_ibnusina/provider/providers.dart';
 import 'package:bmt_ibnusina/screens/batch_penarikan.dart';
 import 'package:bmt_ibnusina/screens/home.dart';
 import 'package:bmt_ibnusina/screens/profile.dart';
-import 'package:bmt_ibnusina/screens/storan.dart';
+import 'package:bmt_ibnusina/screens/stor.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:bmt_ibnusina/screens/login.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +24,10 @@ void main() {
       appWindow.show();
     });
   }
-  initializeDateFormatting('en_US', null).then(
-    (_) => runApp(const MyApp()) 
-  );
+  initializeDateFormatting('en_US', null).then((_) => runApp(MultiProvider(
+        providers: providers,
+        child: const MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -53,22 +55,18 @@ class MyApp extends StatelessWidget {
             horizontalTitleGap: 5,
             iconColor: Colors.white,
             textColor: Colors.white,
-            
           ),
-          textTheme: GoogleFonts.robotoTextTheme()
-        ),
-          
+          textTheme: GoogleFonts.robotoTextTheme()),
       routes: {
         'home': (context) => const Home(),
-        'login': (context) => const LoginScreen(),
-        'myProfile': (context) => const MyProfile(mode: 'profile'), 
-        'newUser': (context) => const MyProfile(mode: 'tambah user'), 
+        'myProfile': (context) => const MyProfile(mode: 'profile'),
+        'newUser': (context) => const MyProfile(mode: 'tambah user'),
         'batch_penarikan': (context) => const BatchPenarikan(),
-        'setor': (context) => const Penyetoran(mode: 'penyetoran'),
-        'penarikan': (context) => const Penyetoran(mode: 'penarikan'),
-        'transfer': (context) => const Penyetoran(mode: 'transfer')
+        'setor': (context) => const Stor(mode: 'penyetoran'),
+        'penarikan': (context) => const Stor(mode: 'penarikan'),
+        'transfer': (context) => const Stor(mode: 'transfer')
       },
-      initialRoute: 'login',
+      initialRoute: 'home',
     );
   }
 }

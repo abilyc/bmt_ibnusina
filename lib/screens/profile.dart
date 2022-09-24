@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:bmt_ibnusina/auth/hasura.dart';
-import 'package:bmt_ibnusina/auth/services.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
+import 'package:bmt_ibnusina/provider/auth_provider.dart';
 import 'package:bmt_ibnusina/tools/bloc.dart';
 import 'package:bmt_ibnusina/tools/textfield_custom.dart';
+import 'package:provider/provider.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class MyProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FocusNode node = FocusNode();
     final bloc = Bloc();
     final TextEditingController namaController = TextEditingController();
     final TextEditingController passController = TextEditingController();
@@ -23,9 +25,10 @@ class MyProfile extends StatelessWidget {
         : MediaQuery.of(context).size.width / 2;
 
     void simpan() async {
+      node.requestFocus();
       final String uName = namaController.text.isNotEmpty
           ? namaController.text
-          : Auth.userData.userName;
+          : context.read<Auth>().user!.userName;
       final message = ScaffoldMessenger.of(context);
       bloc.setLoading(true);
       try {
@@ -49,14 +52,14 @@ class MyProfile extends StatelessWidget {
                     controller: namaController,
                     align: TextAlign.center,
                     hint: mode == 'profile'
-                        ? 'Ganti nama ${Auth.userData.userName}'
-                        : 'Masukan nama baru')),
+                        ? 'Ganti nama ${context.read<Auth>().user!.userName}'
+                        : 'Masukan nama')),
             const SizedBox(height: 5),
             SizedBox(
                 width: width,
                 child: TextFieldCust(
                     controller: passController,
-                    hint: 'Password baru',
+                    hint: mode == 'profile'?'Password baru':'Password',
                     align: TextAlign.center,
                     obscure: true)),
             const SizedBox(height: 5),
@@ -65,7 +68,7 @@ class MyProfile extends StatelessWidget {
                 child: TextFieldCust(
                     obscure: true,
                     controller: confPassController,
-                    hint: 'Ulangi Password baru',
+                    hint: mode == 'profile'?'Ulangi Password baru':'Ulangi Password',
                     align: TextAlign.center,
                     onChanged: (e) => bloc.compare(e, passController.text))),
             const SizedBox(height: 5),
@@ -87,21 +90,24 @@ class MyProfile extends StatelessWidget {
                       : const SizedBox()),
             ),
             const SizedBox(height: 20),
-            StreamBuilder(
-                stream: bloc.isLoading,
-                initialData: false,
-                builder: (context, snapshot) => SizedBox(
-                    width: 100,
-                    child: ElevatedButton(
-                        onPressed: snapshot.data == false ? simpan : null,
-                        child: snapshot.data == false
-                            ? const Text('Simpan')
-                            : const SizedBox(
-                                width: 10,
-                                height: 10,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
-                                ))))),
+            Focus(
+              focusNode: node,
+              child: StreamBuilder(
+                  stream: bloc.isLoading,
+                  initialData: false,
+                  builder: (context, snapshot) => SizedBox(
+                      width: 100,
+                      child: ElevatedButton(
+                          onPressed: snapshot.data == false ? simpan : null,
+                          child: snapshot.data == false
+                              ? const Text('Simpan')
+                              : const SizedBox(
+                                  width: 10,
+                                  height: 10,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  ))))),
+            ),
           ],
         ));
   }

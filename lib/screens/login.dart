@@ -1,39 +1,17 @@
-import 'package:bmt_ibnusina/auth/hasura.dart';
-import 'package:bmt_ibnusina/auth/services.dart';
-import 'package:bmt_ibnusina/db/mutation.dart';
+import 'package:bmt_ibnusina/provider/auth_provider.dart';
 import 'package:bmt_ibnusina/tools/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'dart:io';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  bool loading = false;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    login(String? username, String? password) async {
-      final nav = Navigator.of(context);
-      try {
-        await Hasura.mutate(loginMutation,
-            v: {"username": username, "password": password});
-        Auth.user(Hasura.result);
-        Hasura.headers = {'Authorization': 'Bearer ${Auth.userData.token}'};
-        nav.popAndPushNamed('home');
-      } catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Login Gagal')));
-      }
-    }
-
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     return Wrapper(
       screen: 'login',
       menu: false,
@@ -47,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SizedBox(
                 width: 300,
                 child: TextField(
+                  focusNode: FocusNode(),
                   controller: nameController,
                   style: TextStyle(color: Theme.of(context).primaryColorDark),
                   decoration: InputDecoration(
@@ -77,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SizedBox(
                 width: 300,
                 child: TextField(
+                  focusNode: FocusNode(),
                   controller: passwordController,
                   obscureText: true,
                   style: TextStyle(color: Theme.of(context).primaryColorDark),
@@ -106,33 +86,28 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: SizedBox(
                 width: 120,
-                height: 35,
-                child: ElevatedButton(
-                  onPressed: !loading
-                      ? () async {
-                          setState(() => loading = true);
-                          await login(
-                              nameController.text, passwordController.text);
-                          setState(() => loading = false);
-                        }
-                      : null,
-                  child: loading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator())
-                      : Center(
-                          child: Wrap(
-                            alignment: WrapAlignment.center,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 10,
-                            children: const [
-                              Icon(CupertinoIcons
-                                  .arrowtriangle_right_circle_fill),
-                              Text('MASUK'),
-                            ],
-                          ),
-                        ),
+                height: 45,
+                child: Consumer<Auth>(
+                  builder: (context, value, child) => ElevatedButton(
+                    focusNode: FocusNode(),
+                    onPressed: !value.isLoading ? () async => value.login(context, nameController.text, passwordController.text) : null, 
+                    child: !value.isLoading ? Center(
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 10,
+                        children: const [
+                          Icon(CupertinoIcons
+                              .arrowtriangle_right_circle_fill),
+                          Text('MASUK'),
+                        ],
+                      ),
+                    ) : const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator()
+                    ),
+                  ),
                 ),
               ),
             )

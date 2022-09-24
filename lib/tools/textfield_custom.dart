@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldCust extends StatelessWidget {
   final String? label;
   final TextAlign align;
+  final Function()? onTap;
+  final bool readOnly;
   final Function(String)? onChanged;
   final String? hint;
   final bool obscure;
@@ -16,8 +20,12 @@ class TextFieldCust extends StatelessWidget {
   final TextEditingController? controller;
   final Function? onPressed;
   final FocusNode? focusNode;
+  final bool autofocus;
   const TextFieldCust(
       {Key? key,
+      this.autofocus = false,
+      this.onTap,
+      this.readOnly = false,
       this.inputFormatter,
       this.onChanged,
       this.hint,
@@ -27,7 +35,7 @@ class TextFieldCust extends StatelessWidget {
       this.align = TextAlign.left,
       this.icon,
       this.keyboardType,
-      this.height = 30,
+      this.height = 34,
       this.width,
       this.controller,
       this.enabled = true,
@@ -40,6 +48,11 @@ class TextFieldCust extends StatelessWidget {
       width: (width != null) ? width : double.infinity,
       height: height,
       child: TextField(
+        autofocus: autofocus,
+          focusNode: focusNode,
+          onTap: onTap,
+          style: Platform.isAndroid ? const TextStyle(fontSize: 12) : null,
+          readOnly: readOnly,
           onChanged: onChanged,
           obscureText: obscure,
           textAlign: align,
@@ -47,7 +60,6 @@ class TextFieldCust extends StatelessWidget {
           inputFormatters: inputFormatter,
           keyboardType: keyboardType ?? TextInputType.text,
           controller: controller,
-          style: TextStyle(color: Theme.of(context).primaryColorDark),
           decoration: InputDecoration(
             hintStyle: const TextStyle(fontSize: 13, color: Colors.deepOrange),
             hintText: hint ?? '',

@@ -15,6 +15,7 @@ class MyProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FocusNode node = FocusNode();
     final bloc = Bloc();
     final TextEditingController namaController = TextEditingController();
     final TextEditingController passController = TextEditingController();
@@ -24,7 +25,7 @@ class MyProfile extends StatelessWidget {
         : MediaQuery.of(context).size.width / 2;
 
     void simpan() async {
-      FocusScope.of(context).focusedChild?.unfocus();
+      node.requestFocus();
       final String uName = namaController.text.isNotEmpty
           ? namaController.text
           : context.read<Auth>().user!.userName;
@@ -89,21 +90,24 @@ class MyProfile extends StatelessWidget {
                       : const SizedBox()),
             ),
             const SizedBox(height: 20),
-            StreamBuilder(
-                stream: bloc.isLoading,
-                initialData: false,
-                builder: (context, snapshot) => SizedBox(
-                    width: 100,
-                    child: ElevatedButton(
-                        onPressed: snapshot.data == false ? simpan : null,
-                        child: snapshot.data == false
-                            ? const Text('Simpan')
-                            : const SizedBox(
-                                width: 10,
-                                height: 10,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
-                                ))))),
+            Focus(
+              focusNode: node,
+              child: StreamBuilder(
+                  stream: bloc.isLoading,
+                  initialData: false,
+                  builder: (context, snapshot) => SizedBox(
+                      width: 100,
+                      child: ElevatedButton(
+                          onPressed: snapshot.data == false ? simpan : null,
+                          child: snapshot.data == false
+                              ? const Text('Simpan')
+                              : const SizedBox(
+                                  width: 10,
+                                  height: 10,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  ))))),
+            ),
           ],
         ));
   }

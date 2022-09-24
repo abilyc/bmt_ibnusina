@@ -89,6 +89,7 @@ class LoginScreen extends StatelessWidget {
                 height: 45,
                 child: Consumer<Auth>(
                   builder: (context, value, child) => ElevatedButton(
+                    focusNode: FocusNode(),
                     onPressed: !value.isLoading ? () async => value.login(context, nameController.text, passwordController.text) : null, 
                     child: !value.isLoading ? Center(
                       child: Wrap(

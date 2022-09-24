@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:bmt_ibnusina/auth/hasura.dart';
 import 'package:bmt_ibnusina/db/mutation.dart';
-import 'package:bmt_ibnusina/db/query.dart';
 import 'package:bmt_ibnusina/models/customers_model.dart';
 import 'package:bmt_ibnusina/provider/customer_provider.dart';
 import 'package:bmt_ibnusina/tools/my_formatter.dart';
@@ -38,6 +37,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
     TextEditingController()
   ];
   final List<TextEditingController> idController = [TextEditingController()];
+  final List<TextEditingController> nameController = [TextEditingController()];
 
   final List<TextEditingController> refDateDesc = [
     TextEditingController(),
@@ -76,21 +76,6 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
     });
   }
 
-  Future getCustomer() async {
-    setState(() => isLoading = true);
-    final data = await Hasura.query(customerQuery);
-    customers = (data['data']['customer'] as List)
-        .map((e) => Customer.fromJson(e))
-        .toList();
-    setState(() => isLoading = false);
-  }
-
-  @override
-  void initState() {
-    getCustomer();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final isLoading = context.watch<Customers>().isLoading;
@@ -127,8 +112,8 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101));
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2025));
                           if (pickedDate != null) {
                             refDateDesc[1].text =
                                 DateFormat('dd-MM-yyyy').format(pickedDate);
@@ -167,10 +152,10 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Text('Code'),
-                              Text('Balance'),
-                              Text('Jml'),
+                            children: [
+                              if(!konfirmasi) const Text('Code') else const Text('Name'),
+                              const Text('Balance'),
+                              const Text('Jml'),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -179,6 +164,14 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                konfirmasi ? 
+                                SizedBox(
+                                  height: 34,
+                                  width: width,
+                                  child: TextFieldCust(
+                                    controller: nameController[i],
+                                  ),
+                                ):
                                 SizedBox(
                                   height: 34,
                                   width: width,
@@ -187,6 +180,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                                     textEditingController: codeController[i],
                                     onSelected: (e) {
                                       idController[i].text = e.id;
+                                      nameController[i].text = e.name;
                                       balanceController[i].text =
                                           CurrencyTextInputFormatter(
                                         locale: 'id',
@@ -316,6 +310,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                         node.add(FocusNode());
                         balanceController.add(TextEditingController());
                         amountController.add(TextEditingController());
+                        nameController.add(TextEditingController());
                         idController.add(TextEditingController());
                         setState(() {});
                       },
@@ -328,6 +323,7 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                 height: 40,
                 // width: 150,
                 child: ElevatedButton(
+                    focusNode: FocusNode(),
                     onPressed: () => setState(() => konfirmasi = true),
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -348,7 +344,8 @@ class _BatchPenarikanState extends State<BatchPenarikan> {
                         height: 40,
                         width: 100,
                         child: ElevatedButton(
-                            onPressed: () => setState(() => konfirmasi = false),
+                            onPressed: () =>
+                              setState(() => konfirmasi = false),
                             style: const ButtonStyle(
                                 backgroundColor:
                                     MaterialStatePropertyAll(Colors.red)),
